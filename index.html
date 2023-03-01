@@ -15,16 +15,26 @@
         <!-- menu area -->
         <div id="top-menu-area" class="container-fluid">
             <div id="first-btn-section" class="btn-section">
-                <asp:LinkButton ID="btnAddCall" runat="server" OnClick="BtnAddCall_Click" CssClass="btn-col"></asp:LinkButton>
+
+                <button ID="btnAddCall" runat="server" OnClick="BtnAddCall_Click" CssClass="btn-col">
+                </button>
+
             </div>
 
              <div class="vl"></div>
 
             <div runat="server" ID="upCallButtons" UpdateMode="Conditional" >
                     <div id="second-btn-section" class="btn-section">
-                        <asp:LinkButton ID="btnInputParams" runat="server" OnClick="BtnInputParams_Click" CssClass="btn-col"></asp:LinkButton>
-                        <asp:LinkButton ID="btnAzureLogin" runat="server" OnClick="BtnAzureAD_Click" CssClass="btn-col"><img src="Images/azure.png" alt="AzureAD Login"/>AzureAD Login</asp:LinkButton>
-                        <asp:LinkButton ID="btnSHLogin" runat="server" OnClick="btnSHLogin_Click" CssClass="btn-col"></asp:LinkButton>
+
+                        <button ID="btnInputParams" runat="server" OnClick="BtnInputParams_Click"
+                            CssClass="btn-col"><img src="img/inputParamIcon.png"> </button>
+                        <button ID="btnAzureLogin" runat="server" OnClick="BtnAzureAD_Click" CssClass="btn-col">
+                            <img src="img/azure.png" alt="AzureAD Login" />AzureAD Login
+                        </button>
+                        <button ID="btnSHLogin" runat="server" OnClick="btnSHLogin_Click" CssClass="btn-col">
+                            <img src="img/SharePoint2019.png">
+                        </button>
+
                     </div>
             </div>
 
@@ -32,11 +42,18 @@
 
             <div ID="upUtilityButtons">
                     <div id="third-btn-section" class="btn-section">
-                        <asp:LinkButton ID="btnUp" runat="server" OnClick="BtnUp_Click" CssClass="btn-col"></asp:LinkButton>
-                        <asp:LinkButton ID="btnDown" runat="server" OnClick="BtnDown_Click" CssClass="btn-col"></asp:LinkButton>
-                        <asp:LinkButton ID="btnDelete" runat="server" OnClick="BtnDelete_Click" CssClass="btn-col"></asp:LinkButton>
-                        <asp:LinkButton ID="btnClone" runat="server" OnClick="btnClone_Click" CssClass="btn-col"></asp:LinkButton>
-                        <asp:LinkButton ID="btnRename" runat="server" OnClick="BtnRename_Click" CssClass="btn-col"></asp:LinkButton>
+
+                        <button ID="btnUp" runat="server" OnClick="BtnUp_Click" CssClass="btn-col">
+                        </button>
+                        <button ID="btnDown" runat="server" OnClick="BtnDown_Click" CssClass="btn-col">
+                        </button>
+                        <button ID="btnDelete" runat="server" OnClick="BtnDelete_Click" CssClass="btn-col">
+                        </button>
+                        <button ID="btnClone" runat="server" OnClick="btnClone_Click" CssClass="btn-col">
+                        </button>
+                        <button ID="btnRename" runat="server" OnClick="BtnRename_Click" CssClass="btn-col">
+                        </button>
+
                     </div>
             </div>
 
@@ -81,8 +98,10 @@
                     <div class="toggle"><i class="fa-regular fa-plus"></i></div>
                     <li style="--i:0;" title="New">
                         <a href="#"><i class="fa-regular fa-file"></i></a>
-                    <%--<asp:LinkButton runat="server" OnClick="OnClick"></asp:LinkButton>--%>
-                        </li>
+
+                        <!--<button runat="server" OnClick="OnClick"></button>-->
+                    </li>
+
                     <li style="--i:1;" title="Open File">
                         <a href="#"><i class="fa-regular fa-folder-closed"></i></a>
                     </li>
@@ -125,14 +144,35 @@
                         <span>Errors</span>
                         <span>Warnings</span>
                     </div>
-                </div>
 
-            </div>
+                    <div class="container-download-area" id="container_sidbarDownload" rel="js-container-download-area__download" runat="server">
+                        <div class="navbar-sidecontainer"> <i class="fa-solid fa-file-arrow-down"></i><span>Download</span></div>
+                          <div class="navbar-sidecontainer"> 
+                               <ul class="nav nav-tab" role="tablist">
+                                    <li class="active"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">test.xml</a></li>
+                                    <li><a href="#info" aria-controls="info" role="tab" data-toggle="tab">test.pdf</a></li>
+                               </ul>
+                          </div>
+                          <div class="navbar-sidecontainer__body"> 
+                              download __ body
+                          </div>
+                     </div>
+                    <div class="container-download-area" id="container_sidbarCode"
+                        rel="js-container-download-area__code" runat="server">
+                        <div class="navbar-sidecontainer"> <i class="fa-solid fa-code"></i><span>Code Snippet</span>
+                        </div>
+                        <div class="navbar-sidecontainer">
+                            <ul class="nav nav-tab" role="tablist">
+                                <li class="active"><a href="#settings" aria-controls="settings" role="tab"
+                                        data-toggle="tab">JSON</a></li>
+                                <li><a href="#info" aria-controls="info" role="tab" data-toggle="tab">XML</a></li>
+                            </ul>
+                            <!-- <div class="tab">
+                                <button class="tablinks" onclick="openCity(event, 'London')">London</button>
+                                <button class="tablinks" onclick="openCity(event, 'Paris')">Paris</button>
+                                <button class="tablinks" onclick="openCity(event, 'Tokyo')">Tokyo</button>
+                        </div>-->
 
-            <!--DOWNLOAD SECTION-->
-            <div class="container-download-area__default">
-                container-download-area
-            </div>
 
 
             <div class="container-download-area" id="container_sidbarDownload">
@@ -162,14 +202,18 @@
             </div>
             <div class="container-download-area" id="container_sidbarCustomAction" runat="server">
 
-            </div>
 
-           <div class="container-sidebar">
-                <asp:LinkButton ID="btnSidebarDownload" CssClass="btn-sidebar" runat="server" OnClick="BtnDownload_Click" ClientIDMode="Static"></asp:LinkButton>
-                <asp:LinkButton ID="btnSidebarCode" runat="server" OnClick="BtnCode_Click" CssClass="btn-sidebar" class="btn-sidebar" ClientIDMode="Static"></asp:LinkButton>
-                <asp:LinkButton ID="btnAzureADRegist" runat="server" OnClick="BtnAzureADRegist_Click" CssClass="btn-sidebar"><img src="Images/azure.png" /></asp:LinkButton>
-                <asp:LinkButton ID="btnCustomAction" runat="server" OnClick="BtnCustomAction_Click" CssClass="btn-sidebar"></asp:LinkButton>
-           </div>
+        <div class="container-sidebar">
+            <button ID="btnSidebarDownload" CssClass="btn-sidebar" runat="server" OnClick="BtnDownload_Click"
+                ClientIDMode="Static"></button>
+            <button ID="btnSidebarCode" runat="server" OnClick="BtnCode_Click" CssClass="btn-sidebar"
+                class="btn-sidebar" ClientIDMode="Static"></button>
+            <button ID="btnAzureADRegist" runat="server" OnClick="BtnAzureADRegist_Click"
+                CssClass="btn-sidebar"><img src="Images/azure.png" /></button>
+            <button ID="btnCustomAction" runat="server" OnClick="BtnCustomAction_Click" CssClass="btn-sidebar">
+            </button>
+        </div>
+
 
     </div>
 
