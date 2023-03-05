@@ -330,6 +330,10 @@ input.url-box {
     background-color: #fff;
 }
 
+#call-btn i {
+    font-size: inherit;
+}
+
 #working-area.section {
     height: 80vh;
     flex-direction: row !important;

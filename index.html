@@ -141,61 +141,56 @@
                             <span>Errors</span>
                             <span>Warnings</span>   
                          </div>
-
-                    <!--DOWNLOAD SECTION-->
-                    <div class="container-download-area__default">
-                        container-download-area
+                    </div> 
+                </div>
+                <!--DOWNLOAD SECTION-->
+                <div class="container-download-area__default">
+                    container-download-area
+                </div>
+                <div id="container_sidbarDownload" class="container-download-area" rel="js-container-download-area__download">
+                </div>    
+                <div id="container_sidbarCode" class="container-download-area" rel="js-container-download-area__code">
+                    <div class="navbar-sidecontainer"> <i class="fa-solid fa-code"></i><span>Code Snippet</span>
                     </div>
-                    <div class="container-download-area" id="container_sidbarDownload" rel="js-container-download-area__download">
-                        <div class="navbar-sidecontainer"> <i class="fa-solid fa-file-arrow-down"></i><span>Download</span></div>
-                          <div class="navbar-sidecontainer"> 
-                               <ul class="nav nav-tab" role="tablist">
-                                    <li class="active"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">test.xml</a></li>
-                                    <li><a href="#info" aria-controls="info" role="tab" data-toggle="tab">test.pdf</a></li>
-                               </ul>
-                          </div>
-                          <div class="navbar-sidecontainer__body"> 
-                              download __ body
-                          </div>
-                     </div>
-                    <div class="container-download-area" id="container_sidbarCode"
-                        rel="js-container-download-area__code">
-                        <div class="navbar-sidecontainer"> <i class="fa-solid fa-code"></i><span>Code Snippet</span>
-                        </div>
-                        <div class="navbar-sidecontainer">
+                    <div class="navbar-sidecontainer">
+                        <ul class="nav nav-tab" role="tablist">
+                            <li class="active"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">JSON</a></li>
+                            <li><a href="#info" aria-controls="info" role="tab" data-toggle="tab">XML</a></li>
+                        </ul>
+                        <!-- <div class="tab">
+                            <button class="tablinks" onclick="openCity(event, 'London')">London</button>
+                            <button class="tablinks" onclick="openCity(event, 'Paris')">Paris</button>
+                            <button class="tablinks" onclick="openCity(event, 'Tokyo')">Tokyo</button>
+                    </div>-->
+
+                    </div>
+                <div class="navbar-sidecontainer__body">
+                    Code Snippet __ body
+                    WebControl.TabIndex Property
+                </div>
+                    <!-- <div class="navbar-sidecontainer"> <i class="fa-solid fa-file-arrow-down"></i><span>Download</span></div>
+                        <div class="navbar-sidecontainer"> 
                             <ul class="nav nav-tab" role="tablist">
-                                <li class="active"><a href="#settings" aria-controls="settings" role="tab"
-                                        data-toggle="tab">JSON</a></li>
-                                <li><a href="#info" aria-controls="info" role="tab" data-toggle="tab">XML</a></li>
+                                <li class="active"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">test.xml</a></li>
+                                <li><a href="#info" aria-controls="info" role="tab" data-toggle="tab">test.pdf</a></li>
                             </ul>
-                            <!-- <div class="tab">
-                                <button class="tablinks" onclick="openCity(event, 'London')">London</button>
-                                <button class="tablinks" onclick="openCity(event, 'Paris')">Paris</button>
-                                <button class="tablinks" onclick="openCity(event, 'Tokyo')">Tokyo</button>
-                        </div>-->
-
-                    </div>
-                    <div class="navbar-sidecontainer__body">
-                        Code Snippet __ body
-                        WebControl.TabIndex Property
-                    </div>
+                        </div>
+                        <div class="navbar-sidecontainer__body"> 
+                              download __ body
+                        </div> -->
+                </div>
+                <div id="container_sidbarAzureAD" class="container-download-area">
+                </div>
+                <div id="container_sidbarCustomAction" class="container-download-area">
+                </div>
+                <div class="container-sidebar">
+                    <button ID="btnSidebarDownload" class="btn-sidebar"><img src="img/SidebarDownload.png" class="btn-sidebar"/></button>
+                    <button ID="btnSidebarCode" class="btn-sidebar" class="btn-sidebar" ClientIDMode="Static"><img src="img/SidebarSnippCode.png" class="btn-sidebar"/></button>
+                    <button ID="btnAzureADRegist" class="btn-sidebar"><img src="img/azure.png" class="btn-sidebar"/></button>
+                    <button ID="btnCustomAction" class="btn-sidebar">
+                    <img src="img/SidebarCustomAction.png" class="btn-sidebar"/></button>
+                </div>
         </div>
-        <div class="container-download-area" id="container_sidbarAzureAD">
-
-        </div>
-        <div class="container-download-area" id="container_sidbarCustomAction">
-
-        </div>
-
-        <div class="container-sidebar">
-            <button ID="btnSidebarDownload" class="btn-sidebar"><img src="img/SidebarDownload.png" class="btn-sidebar"/></button>
-            <button ID="btnSidebarCode" class="btn-sidebar" class="btn-sidebar" ClientIDMode="Static"><img src="img/SidebarSnippCode.png" class="btn-sidebar"/>  </button>
-            <button ID="btnAzureADRegist" class="btn-sidebar"><img src="img/azure.png" class="btn-sidebar"/></button>
-            <button ID="btnCustomAction" class="btn-sidebar">
-                <img src="img/SidebarCustomAction.png" class="btn-sidebar"/></button>
-        </div>
-
-    </div>
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js">
