@@ -22,8 +22,7 @@
 
             <div class="vl"></div>
 
-            <asp:UpdatePanel runat="server" ID="upCallButtons" UpdateMode="Conditional">
-                <ContentTemplate>
+            <div ID="upCallButtons">
                     <div id="second-btn-section" class="btn-section">
                         <button ID="btnInputParams" runat="server" OnClick="BtnInputParams_Click" CssClass="btn-col">
                                 <img src="img/inputParamIcon.png"CssClass="btn-col"/> </button>
@@ -33,13 +32,11 @@
                             <img src="img/SharePoint2019.png" CssClass="btn-col"/>
                         </button>
                     </div>
-                </ContentTemplate>
-            </asp:UpdatePanel>
+                </div>
 
             <div class="vl"></div>
 
-            <asp:UpdatePanel runat="server" ID="upUtilityButtons" UpdateMode="Conditional">
-                <ContentTemplate>
+            <div ID="upUtilityButtons">
                     <div id="third-btn-section" class="btn-section">
                         <button ID="btnUp" runat="server" OnClick="BtnUp_Click" CssClass="btn-col">
                         <img src="img/up.png" CssClass="btn-col"/>
@@ -57,13 +54,12 @@
                         <img src="img/Rename.png" CssClass="btn-col"/>
                         </button>
                     </div>
-                </ContentTemplate>
-            </asp:UpdatePanel>
+            </div>
 
             <div class="vl"></div>
 
-            <asp:Panel runat="server" ID="pActionButtons" class="fourth-btn-section btn-section">
-            </asp:Panel>
+            <div ID="pActionButtons" class="fourth-btn-section btn-section">
+            </div>
 
         </div>
 
@@ -73,14 +69,13 @@
         <div class="container-fluid" id="url-area">
             <div class="url-bar-wrapper">
                 <div class="dropdown-btn-wrapper">
-                    <asp:DropDownList runat="server" ID="urldropdownbtn" CssClass="url-dropdown-btn">
-                        <asp:ListItem Selected="True" Value="SOAP" CssClass="dropdown-menu"> SOAP </asp:ListItem>
-                        <asp:ListItem Value="REST" CssClass="dropdown-menu"> REST-GET </asp:ListItem>
-                    </asp:DropDownList>
+                    <select ID="urldropdownbtn" CssClass="url-dropdown-btn"></select>
+                        <option Selected="True" Value="SOAP" CssClass="dropdown-menu"> SOAP </option>
+                        <option Value="REST" CssClass="dropdown-menu"> REST-GET </option>
+                    </select>
                 </div>
-                <asp:TextBox runat="server" CssClass="url-box">
-                </asp:TextBox>
-                <asp:Label ID="dateTimeLabel" runat="server"></asp:Label>
+                <input class="url-box">
+                <span id="dateTimeLabel"></span> 
             </div>
             <button id="call-btn" type="button">
                 <img src="img/1202-plus-sign-add-design.png" style="color: green">
@@ -92,34 +87,10 @@
         <!-- working containers area -->
         <div class="section" id="working-area">
             <div class="container-call-area">
-                <asp:UpdatePanel ID="callPanel" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="true"
-                    CssClass="callPanel">
-                    <Triggers>
-                        <asp:AsyncPostBackTrigger ControlID="btnAddCall" EventName="click" />
-                        <asp:AsyncPostBackTrigger ControlID="btnDelete" EventName="click" />
-                        <asp:AsyncPostBackTrigger ControlID="btnInputParams" EventName="click" />
-                        <asp:AsyncPostBackTrigger ControlID="btnUp" EventName="click" />
-                        <asp:AsyncPostBackTrigger ControlID="btnDown" EventName="click" />
-                        <asp:AsyncPostBackTrigger ControlID="callTreeView" EventName="selectednodechanged" />
-                    </Triggers>
-                    <ContentTemplate>
-                        <asp:TreeView ID="callTreeView" OnSelectedNodeChanged="callTreeView_SelectedNodeChanged"
-                            runat="server" CssClass="callTreeView" SelectedNodeStyle-CssClass="SelectedNodeStyle"
-                            ExpandImageUrl="img/icon-arrow-right"
-                            CollapseImageUrl="img/icon-arrow-downwards.png" RootNodeStyle-CssClass="callTreeNode"
-                            LeafNodeStyle-CssClass="callLeafNode" ClientIDMode="Static">
-                            <!--EnableClientScript="true" PopulateNodesFromClient="true"
-                                OnTreeNodePopulate="PopulateNode" -->
-                                <!-- <Nodes>
-                                    <rootnodestyle cssclass="callTreeNode" />
-                                    <leafnodestyle cssclass="callLeafNode" />
-                                    <asp:TreeNode runat="server" ID="parentNode" PopulateOnDemand="true"></asp:TreeNode>
-                                    </Nodes>-->
-                        </asp:TreeView>
-
-                    </ContentTemplate>
-
-                </asp:UpdatePanel>
+                <div ID="callPanel" CssClass="callPanel">
+                    <div ID="callTreeView">
+                    </div> 
+                </div>
 
                 <!-- Bubble Menu -->
                 <div class="bubble-menu">
@@ -156,33 +127,20 @@
             <!-- Bubble Menu End -->
 
                 <!-- PARAMETER SECTION -->
-                    <div class="container-action-area">
-                        <nav class="navbar-actions"></nav>
-                        <div class="container-service-interface">
-                            <asp:UpdatePanel ID="paramSection" runat="server" UpdateMode="Conditional"
-                                EnableViewState="true" ViewStateMode="Enabled">
-                                <ContentTemplate>
-                                    <asp:GridView ID="paramGridView" runat="server" CellPadding="10" GridLines="None"
-                                        OnRowDataBound="paramGridView_RowDataBound" Visible="true"
-                                        OnSelectedIndexChanged="paramGridView_SelectedIndexChanged"
-                                        AutoGenerateSelectButton="true" DataKeyNames="Parameter"
-                                        CssClass="table table-borderless table-striped" EnableViewState="true"
-                                        ViewStateMode="Enabled">
-                                        <Columns>
-                                        </Columns>
-                                    </asp:GridView>
-                                </ContentTemplate>
-                            </asp:UpdatePanel>
+                <div class="container-action-area">
+                    <nav class="navbar-actions"></nav>
+                    <div class="container-service-interface">
+                        <div ID="paramSection">
+                                <table ID="paramGridView" CellPadding="10" class="table table-borderless table-striped" style="border-collapse:collapse;">
+                                </table>
                         </div>
-                        <div class="container-help-msg-area">
-                            <div class="container-help-msg__text"></div>
-                            <div class="container-help-msg-footer">
-                                <asp:Label runat="server">Errors</asp:Label>
-                                <asp:Label runat="server">Warnings</asp:Label>
-                            </div>
-                        </div>
-
                     </div>
+                    <div class="container-help-msg-area">
+                        <div class="container-help-msg__text"></div>
+                        <div class="container-help-msg-footer">
+                            <span>Errors</span>
+                            <span>Warnings</span>   
+                         </div>
 
                     <!--DOWNLOAD SECTION-->
                     <div class="container-download-area__default">
@@ -263,6 +221,6 @@
   });
 
     </script>
-
-
-</asp:Content>
+</form>
+</body>
+</html>
