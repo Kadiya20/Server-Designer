@@ -6,17 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
+    <script src="https://kit.fontawesome.com/bdebc2ebf9.js" crossorigin="anonymous"></script>
     <title>dox42 ServerDesigner</title>
 </head>
 
 <form ID="Content1">
-    <link rel="stylesheet" runat="server" media="screen" href="Content/ServerDesigner.css" />
+    <link rel="stylesheet" media="screen" href="Content/ServerDesigner.css" />
     <div class="server-designer-wrapper">
         <!-- menu area -->
         <div id="top-menu-area" class="container-fluid">
             <div id="first-btn-section" class="btn-section">
-                <button ID="btnAddCall"  OnClick="BtnAddCall_Click" CssClass="btn-col">
-                    <img src="img/1202-plus-sign-add-design.png" CssClass="btn-col"/>
+                <button ID="btnAddCall" class="btn-col">
+                    <img src="img/1202-plus-sign-add-design.png"/>
                 </button>
             </div>
 
@@ -24,12 +25,12 @@
 
             <div ID="upCallButtons">
                     <div id="second-btn-section" class="btn-section">
-                        <button ID="btnInputParams" runat="server" OnClick="BtnInputParams_Click" CssClass="btn-col">
-                                <img src="img/inputParamIcon.png"CssClass="btn-col"/> </button>
-                        <button ID="btnAzureLogin" runat="server" OnClick="BtnAzureAD_Click" CssClass="btn-col">
-                            <img src="img/azure.png" alt="AzureAD Login" CssClass="btn-col"/>AzureAD Login</button>
-                        <button ID="btnSHLogin" runat="server" OnClick="btnSHLogin_Click" CssClass="btn-col">
-                            <img src="img/SharePoint2019.png" CssClass="btn-col"/>
+                        <button ID="btnInputParams" class="btn-col">
+                                <img src="img/inputParamIcon.png"class="btn-col"/> </button>
+                        <button ID="btnAzureLogin" class="btn-col">
+                            <img src="img/azure.png" alt="AzureAD Login" class="btn-col"/>AzureAD Login</button>
+                        <button ID="btnSHLogin" class="btn-col">
+                            <img src="img/SharePoint2019.png" class="btn-col"/>
                         </button>
                     </div>
                 </div>
@@ -38,20 +39,20 @@
 
             <div ID="upUtilityButtons">
                     <div id="third-btn-section" class="btn-section">
-                        <button ID="btnUp" runat="server" OnClick="BtnUp_Click" CssClass="btn-col">
-                        <img src="img/up.png" CssClass="btn-col"/>
+                        <button ID="btnUp" class="btn-col">
+                        <img src="img/up.png" class="btn-col"/>
                         </button>
-                        <button ID="btnDown" runat="server" OnClick="BtnDown_Click" CssClass="btn-col">
-                        <img src="img/down.png" CssClass="btn-col"/>
+                        <button ID="btnDown" class="btn-col">
+                        <img src="img/down.png" class="btn-col"/>
                         </button>
-                        <button ID="btnDelete" runat="server" OnClick="BtnDelete_Click" CssClass="btn-col">
-                        <img src="img/delete.png" CssClass="btn-col"/>
+                        <button ID="btnDelete" class="btn-col">
+                        <img src="img/delete.png" class="btn-col"/>
                         </button>
-                        <button ID="btnClone" runat="server" OnClick="btnClone_Click" CssClass="btn-col">
-                        <img src="img/clone.png" CssClass="btn-col"/>
+                        <button ID="btnClone" class="btn-col">
+                        <img src="img/clone.png" class="btn-col"/>
                         </button>
-                        <button ID="btnRename" runat="server" OnClick="BtnRename_Click" CssClass="btn-col">
-                        <img src="img/Rename.png" CssClass="btn-col"/>
+                        <button ID="btnRename" class="btn-col">
+                        <img src="img/Rename.png" class="btn-col"/>
                         </button>
                     </div>
             </div>
@@ -69,16 +70,16 @@
         <div class="container-fluid" id="url-area">
             <div class="url-bar-wrapper">
                 <div class="dropdown-btn-wrapper">
-                    <select ID="urldropdownbtn" CssClass="url-dropdown-btn"></select>
-                        <option Selected="True" Value="SOAP" CssClass="dropdown-menu"> SOAP </option>
-                        <option Value="REST" CssClass="dropdown-menu"> REST-GET </option>
+                    <select ID="urldropdownbtn" class="url-dropdown-btn"></select>
+                        <option Selected="True" Value="SOAP" class="dropdown-menu"> SOAP </option>
+                        <option Value="REST" class="dropdown-menu"> REST-GET </option>
                     </select>
                 </div>
                 <input class="url-box">
                 <span id="dateTimeLabel"></span> 
             </div>
-            <button id="call-btn" type="button">
-                <img src="img/1202-plus-sign-add-design.png" style="color: green">
+            <button id="call-btn" class="btn-col" type="button">
+                <i class="fa-solid fa-play" style="color: green"></i>
                 <span>&nbsp; Call</span>
             </button>
         </div>
@@ -87,7 +88,7 @@
         <!-- working containers area -->
         <div class="section" id="working-area">
             <div class="container-call-area">
-                <div ID="callPanel" CssClass="callPanel">
+                <div ID="callPanel" class="callPanel">
                     <div ID="callTreeView">
                     </div> 
                 </div>
@@ -97,7 +98,6 @@
                     <div class="toggle"><i class="fa-regular fa-plus"></i></div>
                     <li style="--i:0;" title="New">
                         <a href="#"><i class="fa-regular fa-file"></i></a>
-                        <!--<button runat="server" OnClick="OnClick"></button>-->
                     </li>
                     <li style="--i:1;" title="Open File">
                         <a href="#"><i class="fa-regular fa-folder-closed"></i></a>
@@ -146,7 +146,7 @@
                     <div class="container-download-area__default">
                         container-download-area
                     </div>
-                    <div class="container-download-area" id="container_sidbarDownload" rel="js-container-download-area__download" runat="server">
+                    <div class="container-download-area" id="container_sidbarDownload" rel="js-container-download-area__download">
                         <div class="navbar-sidecontainer"> <i class="fa-solid fa-file-arrow-down"></i><span>Download</span></div>
                           <div class="navbar-sidecontainer"> 
                                <ul class="nav nav-tab" role="tablist">
@@ -159,7 +159,7 @@
                           </div>
                      </div>
                     <div class="container-download-area" id="container_sidbarCode"
-                        rel="js-container-download-area__code" runat="server">
+                        rel="js-container-download-area__code">
                         <div class="navbar-sidecontainer"> <i class="fa-solid fa-code"></i><span>Code Snippet</span>
                         </div>
                         <div class="navbar-sidecontainer">
@@ -180,28 +180,25 @@
                         WebControl.TabIndex Property
                     </div>
         </div>
-        <div class="container-download-area" id="container_sidbarAzureAD" runat="server">
+        <div class="container-download-area" id="container_sidbarAzureAD">
 
         </div>
-        <div class="container-download-area" id="container_sidbarCustomAction" runat="server">
+        <div class="container-download-area" id="container_sidbarCustomAction">
 
         </div>
 
         <div class="container-sidebar">
-            <button ID="btnSidebarDownload" CssClass="btn-sidebar" runat="server" OnClick="BtnDownload_Click"
-                ClientIDMode="Static"><img src="img/SidebarDownload.png" CssClass="btn-sidebar"/></button>
-            <button ID="btnSidebarCode" runat="server" OnClick="BtnCode_Click" CssClass="btn-sidebar"
-                class="btn-sidebar" ClientIDMode="Static"><img src="img/SidebarSnippCode.png" CssClass="btn-sidebar"/>  </button>
-            <button ID="btnAzureADRegist" runat="server" OnClick="BtnAzureADRegist_Click"
-                CssClass="btn-sidebar"><img src="img/azure.png" CssClass="btn-sidebar"/></button>
-            <button ID="btnCustomAction" runat="server" OnClick="BtnCustomAction_Click" CssClass="btn-sidebar">
-                <img src="img/SidebarCustomAction.png" CssClass="btn-sidebar"/></button>
+            <button ID="btnSidebarDownload" class="btn-sidebar"><img src="img/SidebarDownload.png" class="btn-sidebar"/></button>
+            <button ID="btnSidebarCode" class="btn-sidebar" class="btn-sidebar" ClientIDMode="Static"><img src="img/SidebarSnippCode.png" class="btn-sidebar"/>  </button>
+            <button ID="btnAzureADRegist" class="btn-sidebar"><img src="img/azure.png" class="btn-sidebar"/></button>
+            <button ID="btnCustomAction" class="btn-sidebar">
+                <img src="img/SidebarCustomAction.png" class="btn-sidebar"/></button>
         </div>
 
     </div>
     </div>
 
-    <script src="<%= ResolveUrl(" ~/Scripts/jquery-3.6.0.min.js")%>">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js">
     </script>
     <script>
         $(document).ready(function () {
