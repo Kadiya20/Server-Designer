@@ -88,6 +88,8 @@ nav[aria-hidden="true"] {
     text-align: center;
     font-size: 1em;
     color: #707070;
+    border: none;
+    outline: none;
 }
 
     .btn-col i {
