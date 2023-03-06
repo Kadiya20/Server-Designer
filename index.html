@@ -6,64 +6,61 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
+    <script src="https://kit.fontawesome.com/bdebc2ebf9.js" crossorigin="anonymous"></script>
     <title>dox42 ServerDesigner</title>
 </head>
 
 <form ID="Content1">
-    <link rel="stylesheet" runat="server" media="screen" href="Content/ServerDesigner.css" />
+    <link rel="stylesheet" media="screen" href="Content/ServerDesigner.css" />
     <div class="server-designer-wrapper">
         <!-- menu area -->
         <div id="top-menu-area" class="container-fluid">
             <div id="first-btn-section" class="btn-section">
-                <button ID="btnAddCall"  OnClick="BtnAddCall_Click" CssClass="btn-col">
-                    <img src="img/1202-plus-sign-add-design.png" CssClass="btn-col"/>
+                <button ID="btnAddCall" class="btn-col">
+                    <img src="img/1202-plus-sign-add-design.png"/>
                 </button>
             </div>
 
             <div class="vl"></div>
 
-            <asp:UpdatePanel runat="server" ID="upCallButtons" UpdateMode="Conditional">
-                <ContentTemplate>
+            <div ID="upCallButtons">
                     <div id="second-btn-section" class="btn-section">
-                        <button ID="btnInputParams" runat="server" OnClick="BtnInputParams_Click" CssClass="btn-col">
-                                <img src="img/inputParamIcon.png"CssClass="btn-col"/> </button>
-                        <button ID="btnAzureLogin" runat="server" OnClick="BtnAzureAD_Click" CssClass="btn-col">
-                            <img src="img/azure.png" alt="AzureAD Login" CssClass="btn-col"/>AzureAD Login</button>
-                        <button ID="btnSHLogin" runat="server" OnClick="btnSHLogin_Click" CssClass="btn-col">
-                            <img src="img/SharePoint2019.png" CssClass="btn-col"/>
+                        <button ID="btnInputParams" class="btn-col">
+                                <img src="img/inputParamIcon.png"class="btn-col"/> </button>
+                        <button ID="btnAzureLogin" class="btn-col">
+                            <img src="img/azure.png" alt="AzureAD Login" class="btn-col"/>AzureAD Login</button>
+                        <button ID="btnSHLogin" class="btn-col">
+                            <img src="img/SharePoint2019.png" class="btn-col"/>
                         </button>
                     </div>
-                </ContentTemplate>
-            </asp:UpdatePanel>
+                </div>
 
             <div class="vl"></div>
 
-            <asp:UpdatePanel runat="server" ID="upUtilityButtons" UpdateMode="Conditional">
-                <ContentTemplate>
+            <div ID="upUtilityButtons">
                     <div id="third-btn-section" class="btn-section">
-                        <button ID="btnUp" runat="server" OnClick="BtnUp_Click" CssClass="btn-col">
-                        <img src="img/up.png" CssClass="btn-col"/>
+                        <button ID="btnUp" class="btn-col">
+                        <img src="img/up.png" class="btn-col"/>
                         </button>
-                        <button ID="btnDown" runat="server" OnClick="BtnDown_Click" CssClass="btn-col">
-                        <img src="img/down.png" CssClass="btn-col"/>
+                        <button ID="btnDown" class="btn-col">
+                        <img src="img/down.png" class="btn-col"/>
                         </button>
-                        <button ID="btnDelete" runat="server" OnClick="BtnDelete_Click" CssClass="btn-col">
-                        <img src="img/delete.png" CssClass="btn-col"/>
+                        <button ID="btnDelete" class="btn-col">
+                        <img src="img/delete.png" class="btn-col"/>
                         </button>
-                        <button ID="btnClone" runat="server" OnClick="btnClone_Click" CssClass="btn-col">
-                        <img src="img/clone.png" CssClass="btn-col"/>
+                        <button ID="btnClone" class="btn-col">
+                        <img src="img/clone.png" class="btn-col"/>
                         </button>
-                        <button ID="btnRename" runat="server" OnClick="BtnRename_Click" CssClass="btn-col">
-                        <img src="img/Rename.png" CssClass="btn-col"/>
+                        <button ID="btnRename" class="btn-col">
+                        <img src="img/Rename.png" class="btn-col"/>
                         </button>
                     </div>
-                </ContentTemplate>
-            </asp:UpdatePanel>
+            </div>
 
             <div class="vl"></div>
 
-            <asp:Panel runat="server" ID="pActionButtons" class="fourth-btn-section btn-section">
-            </asp:Panel>
+            <div ID="pActionButtons" class="fourth-btn-section btn-section">
+            </div>
 
         </div>
 
@@ -73,17 +70,16 @@
         <div class="container-fluid" id="url-area">
             <div class="url-bar-wrapper">
                 <div class="dropdown-btn-wrapper">
-                    <asp:DropDownList runat="server" ID="urldropdownbtn" CssClass="url-dropdown-btn">
-                        <asp:ListItem Selected="True" Value="SOAP" CssClass="dropdown-menu"> SOAP </asp:ListItem>
-                        <asp:ListItem Value="REST" CssClass="dropdown-menu"> REST-GET </asp:ListItem>
-                    </asp:DropDownList>
+                    <select ID="urldropdownbtn" class="url-dropdown-btn"></select>
+                        <option Selected="True" Value="SOAP" class="dropdown-menu"> SOAP </option>
+                        <option Value="REST" class="dropdown-menu"> REST-GET </option>
+                    </select>
                 </div>
-                <asp:TextBox runat="server" CssClass="url-box">
-                </asp:TextBox>
-                <asp:Label ID="dateTimeLabel" runat="server"></asp:Label>
+                <input class="url-box">
+                <span id="dateTimeLabel"></span> 
             </div>
-            <button id="call-btn" type="button">
-                <img src="img/1202-plus-sign-add-design.png" style="color: green">
+            <button id="call-btn" class="btn-col" type="button">
+                <i class="fa-solid fa-play" style="color: green"></i>
                 <span>&nbsp; Call</span>
             </button>
         </div>
@@ -92,41 +88,16 @@
         <!-- working containers area -->
         <div class="section" id="working-area">
             <div class="container-call-area">
-                <asp:UpdatePanel ID="callPanel" runat="server" UpdateMode="Conditional" ChildrenAsTriggers="true"
-                    CssClass="callPanel">
-                    <Triggers>
-                        <asp:AsyncPostBackTrigger ControlID="btnAddCall" EventName="click" />
-                        <asp:AsyncPostBackTrigger ControlID="btnDelete" EventName="click" />
-                        <asp:AsyncPostBackTrigger ControlID="btnInputParams" EventName="click" />
-                        <asp:AsyncPostBackTrigger ControlID="btnUp" EventName="click" />
-                        <asp:AsyncPostBackTrigger ControlID="btnDown" EventName="click" />
-                        <asp:AsyncPostBackTrigger ControlID="callTreeView" EventName="selectednodechanged" />
-                    </Triggers>
-                    <ContentTemplate>
-                        <asp:TreeView ID="callTreeView" OnSelectedNodeChanged="callTreeView_SelectedNodeChanged"
-                            runat="server" CssClass="callTreeView" SelectedNodeStyle-CssClass="SelectedNodeStyle"
-                            ExpandImageUrl="img/icon-arrow-right"
-                            CollapseImageUrl="img/icon-arrow-downwards.png" RootNodeStyle-CssClass="callTreeNode"
-                            LeafNodeStyle-CssClass="callLeafNode" ClientIDMode="Static">
-                            <!--EnableClientScript="true" PopulateNodesFromClient="true"
-                                OnTreeNodePopulate="PopulateNode" -->
-                                <!-- <Nodes>
-                                    <rootnodestyle cssclass="callTreeNode" />
-                                    <leafnodestyle cssclass="callLeafNode" />
-                                    <asp:TreeNode runat="server" ID="parentNode" PopulateOnDemand="true"></asp:TreeNode>
-                                    </Nodes>-->
-                        </asp:TreeView>
-
-                    </ContentTemplate>
-
-                </asp:UpdatePanel>
+                <div ID="callPanel" class="callPanel">
+                    <div ID="callTreeView">
+                    </div> 
+                </div>
 
                 <!-- Bubble Menu -->
                 <div class="bubble-menu">
                     <div class="toggle"><i class="fa-regular fa-plus"></i></div>
                     <li style="--i:0;" title="New">
                         <a href="#"><i class="fa-regular fa-file"></i></a>
-                        <!--<button runat="server" OnClick="OnClick"></button>-->
                     </li>
                     <li style="--i:1;" title="Open File">
                         <a href="#"><i class="fa-regular fa-folder-closed"></i></a>
@@ -156,94 +127,73 @@
             <!-- Bubble Menu End -->
 
                 <!-- PARAMETER SECTION -->
-                    <div class="container-action-area">
-                        <nav class="navbar-actions"></nav>
-                        <div class="container-service-interface">
-                            <asp:UpdatePanel ID="paramSection" runat="server" UpdateMode="Conditional"
-                                EnableViewState="true" ViewStateMode="Enabled">
-                                <ContentTemplate>
-                                    <asp:GridView ID="paramGridView" runat="server" CellPadding="10" GridLines="None"
-                                        OnRowDataBound="paramGridView_RowDataBound" Visible="true"
-                                        OnSelectedIndexChanged="paramGridView_SelectedIndexChanged"
-                                        AutoGenerateSelectButton="true" DataKeyNames="Parameter"
-                                        CssClass="table table-borderless table-striped" EnableViewState="true"
-                                        ViewStateMode="Enabled">
-                                        <Columns>
-                                        </Columns>
-                                    </asp:GridView>
-                                </ContentTemplate>
-                            </asp:UpdatePanel>
+                <div class="container-action-area">
+                    <nav class="navbar-actions"></nav>
+                    <div class="container-service-interface">
+                        <div ID="paramSection">
+                                <table ID="paramGridView" CellPadding="10" class="table table-borderless table-striped" style="border-collapse:collapse;">
+                                </table>
                         </div>
-                        <div class="container-help-msg-area">
-                            <div class="container-help-msg__text"></div>
-                            <div class="container-help-msg-footer">
-                                <asp:Label runat="server">Errors</asp:Label>
-                                <asp:Label runat="server">Warnings</asp:Label>
-                            </div>
-                        </div>
+                    </div>
+                    <div class="container-help-msg-area">
+                        <div class="container-help-msg__text"></div>
+                        <div class="container-help-msg-footer">
+                            <span>Errors</span>
+                            <span>Warnings</span>   
+                         </div>
+                    </div> 
+                </div>
+                <!--DOWNLOAD SECTION-->
+                <div class="container-download-area__default">
+                    container-download-area
+                </div>
+                <div id="container_sidbarDownload" class="container-download-area" rel="js-container-download-area__download">
+                </div>    
+                <div id="container_sidbarCode" class="container-download-area" rel="js-container-download-area__code">
+                    <div class="navbar-sidecontainer"> <i class="fa-solid fa-code"></i><span>Code Snippet</span>
+                    </div>
+                    <div class="navbar-sidecontainer">
+                        <ul class="nav nav-tab" role="tablist">
+                            <li class="active"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">JSON</a></li>
+                            <li><a href="#info" aria-controls="info" role="tab" data-toggle="tab">XML</a></li>
+                        </ul>
+                        <!-- <div class="tab">
+                            <button class="tablinks" onclick="openCity(event, 'London')">London</button>
+                            <button class="tablinks" onclick="openCity(event, 'Paris')">Paris</button>
+                            <button class="tablinks" onclick="openCity(event, 'Tokyo')">Tokyo</button>
+                    </div>-->
 
                     </div>
-
-                    <!--DOWNLOAD SECTION-->
-                    <div class="container-download-area__default">
-                        container-download-area
-                    </div>
-                    <div class="container-download-area" id="container_sidbarDownload" rel="js-container-download-area__download" runat="server">
-                        <div class="navbar-sidecontainer"> <i class="fa-solid fa-file-arrow-down"></i><span>Download</span></div>
-                          <div class="navbar-sidecontainer"> 
-                               <ul class="nav nav-tab" role="tablist">
-                                    <li class="active"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">test.xml</a></li>
-                                    <li><a href="#info" aria-controls="info" role="tab" data-toggle="tab">test.pdf</a></li>
-                               </ul>
-                          </div>
-                          <div class="navbar-sidecontainer__body"> 
-                              download __ body
-                          </div>
-                     </div>
-                    <div class="container-download-area" id="container_sidbarCode"
-                        rel="js-container-download-area__code" runat="server">
-                        <div class="navbar-sidecontainer"> <i class="fa-solid fa-code"></i><span>Code Snippet</span>
-                        </div>
-                        <div class="navbar-sidecontainer">
+                <div class="navbar-sidecontainer__body">
+                    Code Snippet __ body
+                    WebControl.TabIndex Property
+                </div>
+                    <!-- <div class="navbar-sidecontainer"> <i class="fa-solid fa-file-arrow-down"></i><span>Download</span></div>
+                        <div class="navbar-sidecontainer"> 
                             <ul class="nav nav-tab" role="tablist">
-                                <li class="active"><a href="#settings" aria-controls="settings" role="tab"
-                                        data-toggle="tab">JSON</a></li>
-                                <li><a href="#info" aria-controls="info" role="tab" data-toggle="tab">XML</a></li>
+                                <li class="active"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">test.xml</a></li>
+                                <li><a href="#info" aria-controls="info" role="tab" data-toggle="tab">test.pdf</a></li>
                             </ul>
-                            <!-- <div class="tab">
-                                <button class="tablinks" onclick="openCity(event, 'London')">London</button>
-                                <button class="tablinks" onclick="openCity(event, 'Paris')">Paris</button>
-                                <button class="tablinks" onclick="openCity(event, 'Tokyo')">Tokyo</button>
-                        </div>-->
-
-                    </div>
-                    <div class="navbar-sidecontainer__body">
-                        Code Snippet __ body
-                        WebControl.TabIndex Property
-                    </div>
+                        </div>
+                        <div class="navbar-sidecontainer__body"> 
+                              download __ body
+                        </div> -->
+                </div>
+                <div id="container_sidbarAzureAD" class="container-download-area">
+                </div>
+                <div id="container_sidbarCustomAction" class="container-download-area">
+                </div>
+                <div class="container-sidebar">
+                    <button ID="btnSidebarDownload" class="btn-sidebar"><img src="img/SidebarDownload.png" class="btn-sidebar"/></button>
+                    <button ID="btnSidebarCode" class="btn-sidebar" class="btn-sidebar" ClientIDMode="Static"><img src="img/SidebarSnippCode.png" class="btn-sidebar"/></button>
+                    <button ID="btnAzureADRegist" class="btn-sidebar"><img src="img/azure.png" class="btn-sidebar"/></button>
+                    <button ID="btnCustomAction" class="btn-sidebar">
+                    <img src="img/SidebarCustomAction.png" class="btn-sidebar"/></button>
+                </div>
         </div>
-        <div class="container-download-area" id="container_sidbarAzureAD" runat="server">
-
-        </div>
-        <div class="container-download-area" id="container_sidbarCustomAction" runat="server">
-
-        </div>
-
-        <div class="container-sidebar">
-            <button ID="btnSidebarDownload" CssClass="btn-sidebar" runat="server" OnClick="BtnDownload_Click"
-                ClientIDMode="Static"><img src="img/SidebarDownload.png" CssClass="btn-sidebar"/></button>
-            <button ID="btnSidebarCode" runat="server" OnClick="BtnCode_Click" CssClass="btn-sidebar"
-                class="btn-sidebar" ClientIDMode="Static"><img src="img/SidebarSnippCode.png" CssClass="btn-sidebar"/>  </button>
-            <button ID="btnAzureADRegist" runat="server" OnClick="BtnAzureADRegist_Click"
-                CssClass="btn-sidebar"><img src="img/azure.png" CssClass="btn-sidebar"/></button>
-            <button ID="btnCustomAction" runat="server" OnClick="BtnCustomAction_Click" CssClass="btn-sidebar">
-                <img src="img/SidebarCustomAction.png" CssClass="btn-sidebar"/></button>
-        </div>
-
-    </div>
     </div>
 
-    <script src="<%= ResolveUrl(" ~/Scripts/jquery-3.6.0.min.js")%>">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js">
     </script>
     <script>
         $(document).ready(function () {
@@ -263,6 +213,6 @@
   });
 
     </script>
-
-
-</asp:Content>
+</form>
+</body>
+</html>
