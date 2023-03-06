@@ -160,7 +160,7 @@ nav[aria-hidden="true"] {
     z-index: 1;
 }
 
-#MainContent_btnInputParams:hover, #MainContent_btnAzureLogin:hover, #MainContent_btnSHLogin:hover {
+#btnInputParams:hover, #btnAzureLogin:hover, #btnSHLogin:hover {
     background-color: #ddd;
 }
 
@@ -178,7 +178,7 @@ nav[aria-hidden="true"] {
 
 
 
-#MainContent_btnUp:hover, #MainContent_btnDown:hover, #MainContent_btnDelete:hover, #MainContent_btnClone:hover, #MainContent_btnRename:hover {
+#btnUp:hover, #btnDown:hover, #btnDelete:hover, #btnClone:hover, #btnRename:hover {
     background-color: #ddd;
 }
 
@@ -210,7 +210,7 @@ nav[aria-hidden="true"] {
     color: #707070;
 }*/
 
-#MainContent_btnSharepoint:hover, #MainContent_btnSave:hover, #MainContent_btnEmail:hover, #MainContent_btnReturn:hover, #MainContent_btnPrint:hover, #MainContent_btnSql:hover {
+#btnSharepoint:hover, #btnSave:hover, #btnEmail:hover, #btnReturn:hover, #btnPrint:hover, #btnSql:hover {
     background-color: #ddd;
 }
 
@@ -238,7 +238,7 @@ nav[aria-hidden="true"] {
 }
 
 #MainContent_btnAzureBlobStorage { margin-left: -4px;}*/
-#MainContent_btnDocuSign:hover {
+#btnDocuSign:hover {
     background-color: #ddd;
 }
 
@@ -274,7 +274,7 @@ nav[aria-hidden="true"] {
     display: inline-block;
 }
 
-#MainContent_urldropdownbtn.url-dropdown-btn {
+#urldropdownbtn.url-dropdown-btn {
     min-width: 170px;
     height: 100% !important;
     /*display: inline-block;*/
@@ -350,7 +350,7 @@ input.url-box {
     overflow: auto;
 }
 
-#MainContent_callPanel {
+#callPanel {
     height: 50vh;
 }
 
@@ -471,7 +471,7 @@ input.url-box {
     border-bottom: 1px lightgrey solid;
 }
 
-#MainContent_paramSection {
+#paramSection {
     background-color: #fff;
 }
 
@@ -483,7 +483,7 @@ input.url-box {
     line-height: 2;
 }
 
-#MainContent_paramTableRow {
+#paramTableRow {
     height: 20px;
 }
 
@@ -640,7 +640,7 @@ footer {
 }
 
 @media screen and (max-width: 2283px) {
-    #MainContent_btnDocuSign, #MainContent_btnCRMOutput, #MainContent_btnAzureBlobStorage {
+    #btnDocuSign, #btnCRMOutput, #btnAzureBlobStorage {
         min-width: 250px !important;
         height: 30px;
         flex-direction: row;
@@ -677,7 +677,7 @@ footer {
 }
 
 @media screen and (max-width: 1479px) {
-    #MainContent_btnInputParams, #MainContent_btnAzureLogin, #MainContent_btnSHLogin {
+    #btnInputParams, #btnAzureLogin, #btnSHLogin {
         min-width: 190px !important;
         height: 30px;
         flex-direction: row;
@@ -705,7 +705,7 @@ footer {
 }
 
 @media screen and (max-width: 1436px) {
-    #MainContent_btnUp, #MainContent_btnDown, #MainContent_btnDelete, #MainContent_btnClone, #MainContent_btnRename {
+    #btnUp, #btnDown, #btnDelete, #btnClone, #btnRename {
         min-width: 190px !important;
         height: 30px;
         display: flex;
