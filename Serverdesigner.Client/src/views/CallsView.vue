@@ -3,7 +3,6 @@ import Tree from 'primevue/tree';
 import CallViewButtons from '../components/CallViewButtons.vue';
 import EditCallComponent from '../components/EditCallComponent.vue';
 import CallService from "../services/CallService.js"
-
 </script>
 <template>
     <div class="callsView">
@@ -26,14 +25,12 @@ import CallService from "../services/CallService.js"
     display: flex;
     flex-direction: column;
 }
-
 .callsContent {
     display: flex;
 }
 .tree {
     flex: 0 1 30em;
 }
-
 .editarea {
     flex-grow: 1;
 }
