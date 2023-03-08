@@ -11,8 +11,7 @@ import CallService from "../services/CallService.js"
         </div>
         <div class="callsContent">
             <div class="tree">
-                <Tree selectionMode="single" v-bind:value="treeNodes"  v-on:node-select="onNodeSelect">
-                <img src="@/assets/images/PlaySign.png"></Tree>
+                <Tree selectionMode="single" v-bind:value="treeNodes"  v-on:node-select="onNodeSelect"></Tree>
             </div>
             <div class="editarea">
                 <EditCallComponent v-bind:call="currentNode"></EditCallComponent>
@@ -31,9 +30,6 @@ import CallService from "../services/CallService.js"
 }
 .tree {
     flex: 0 1 30em;
-}
-.tree img{
-    width: 16px;
 }
 .editarea {
     flex-grow: 1;
