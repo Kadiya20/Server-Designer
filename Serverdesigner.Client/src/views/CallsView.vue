@@ -58,8 +58,7 @@ export default {
             }
         },
         addCall() {
-            const name = prompt("Name");
-            CallService.addCall(name);
+            CallService.addCall();
             this.treeNodes = CallService.getCalls();
         },
         onNodeSelect(node) {
