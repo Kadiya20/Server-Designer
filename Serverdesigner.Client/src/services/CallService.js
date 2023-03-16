@@ -8,7 +8,12 @@ class CallService {
       const name = "NewCall " + (++this.Counter);
       const operation = "Operation :";
       const templatePath = "TemplatePath :";
-      this.calls.push({label: name, data: {name:name,operation:operation,templatePath:templatePath}});
+      this.calls.push({label: name, data: {
+        name:name,
+        operation :operation,
+        templatePath : templatePath,
+      } 
+    });
   }
 
   getCalls() {
