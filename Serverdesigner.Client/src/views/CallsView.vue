@@ -3,7 +3,9 @@ import Tree from 'primevue/tree';
 import CallViewButtons from '../components/CallViewButtons.vue';
 import 'primeicons/primeicons.css';
 import EditCallComponent from '../components/EditCallComponent.vue';
-import CallService from "../services/CallService.js"
+import CallService from "../services/CallService.js";
+
+
 </script>
 <template>
     <div class="callsView">
@@ -12,9 +14,10 @@ import CallService from "../services/CallService.js"
         </div>
         <div class="callsContent">
             <div class="tree">
-                <Tree selectionMode="single" v-bind:value="treeNodes" v-bind:expandedKeys="expandedNodes" v-on:node-select="onNodeSelect" v-on:node-toggle="onNodeToggle" ></Tree>
-             <div class="editarea">
-                <EditCallComponent v-bind:call="currentNode"></EditCallComponent>
+                <Tree selectionMode="single" v-bind:value="treeNodes" v-on:node-select="onNodeSelect">  
+                </Tree>
+             <div class="editarea" v-if="'data' in currentNode">
+                <EditCallComponent v-bind:call="currentNode" v-on:change="updateTree"></EditCallComponent>
             </div>
         </div>
     </div>
@@ -31,10 +34,13 @@ import CallService from "../services/CallService.js"
 }
 .tree {
     flex: 0 1 30em;
+    visibility: visible;
+    
 }
 .editarea {
     flex-grow: 1;
 }
+
 
 </style>
 
@@ -43,12 +49,12 @@ export default {
     components: { CallViewButtons , Tree},
     data() {
         return {
-        treeNodes: [],
+            treeNodes: [],
             currentNode: {},
-            expandedNodes: []
         };
     },
     mounted() {
+        //CallService.getCalls().then((data) => (this.treeNodes = data));
         this.treeNodes = CallService.getCalls();
     },
     methods: {
@@ -60,24 +66,13 @@ export default {
         addCall() {
             CallService.addCall();
             this.treeNodes = CallService.getCalls();
-            const newNode = this.treeNodes[this.treeNodes.length - 1];
-            this.expandedNodes.push(newNode.key);
         },
         onNodeSelect(node) {
             this.currentNode = node;
-
         },
-      onNodeToggle(node) {
-             if (this.expandedNodes.includes(node.key)) {
-                 // Node is already expanded, so collapse it
-                   this.expandedNodes.splice(this.expandedNodes.indexOf(node.key), 1);
-               } else {
-                     // Node is not expanded, so expand it
-                            this.expandedNodes.push(node.key);
-                       }
-        },
-
-
+        updateTree() {
+            this.treeNodes = CallService.getCalls();
+        }
     },
 };
 </script>
