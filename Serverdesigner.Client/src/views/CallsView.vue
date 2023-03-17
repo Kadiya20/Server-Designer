@@ -1,8 +1,11 @@
 <script setup>
 import Tree from 'primevue/tree';
 import CallViewButtons from '../components/CallViewButtons.vue';
+import 'primeicons/primeicons.css';
 import EditCallComponent from '../components/EditCallComponent.vue';
-import CallService from "../services/CallService.js"
+import CallService from "../services/CallService.js";
+
+
 </script>
 <template>
     <div class="callsView">
@@ -11,13 +14,14 @@ import CallService from "../services/CallService.js"
         </div>
         <div class="callsContent">
             <div class="tree">
-                <Tree selectionMode="single" v-bind:value="treeNodes"  v-on:node-select="onNodeSelect"></Tree>
-            </div>
-            <div class="editarea">
-                <EditCallComponent v-bind:call="currentNode"></EditCallComponent>
+                <Tree selectionMode="single" v-bind:value="treeNodes" v-on:node-select="onNodeSelect">  
+                </Tree>
+             <div class="editarea" v-if="'data' in currentNode">
+                <EditCallComponent v-bind:call="currentNode" v-on:change="updateTree"></EditCallComponent>
             </div>
         </div>
     </div>
+</div>
 </template>
 
 <style scoped>
@@ -30,23 +34,27 @@ import CallService from "../services/CallService.js"
 }
 .tree {
     flex: 0 1 30em;
+    visibility: visible;
+    
 }
 .editarea {
     flex-grow: 1;
 }
 
+
 </style>
 
 <script>
 export default {
-    components: { CallViewButtons },
+    components: { CallViewButtons , Tree},
     data() {
         return {
             treeNodes: [],
-            currentNode: {}
+            currentNode: {},
         };
     },
     mounted() {
+        //CallService.getCalls().then((data) => (this.treeNodes = data));
         this.treeNodes = CallService.getCalls();
     },
     methods: {
@@ -62,6 +70,9 @@ export default {
         onNodeSelect(node) {
             this.currentNode = node;
         },
+        updateTree() {
+            this.treeNodes = CallService.getCalls();
+        }
     },
 };
 </script>

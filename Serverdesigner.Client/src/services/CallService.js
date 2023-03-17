@@ -5,14 +5,24 @@ class CallService {
   }
 
   addCall() {
-      const name = "NewCall " + (++this.Counter);
-      const operation = "Operation :";
-      const templatePath = "TemplatePath :";
-      this.calls.push({label: name, data: {name:name,operation:operation,templatePath:templatePath}});
+    const name = "NewCall " + (++this.Counter);
+    const operation = "";
+    const templatePath = "";
+    this.calls.push({
+      name: name,
+      operation: operation,
+      templatePath: templatePath
+    });
   }
 
   getCalls() {
-      return [...this.calls]
+    return this.calls.map(c => ({
+      label: c.name, data: c, children: [
+        { label: "Name: " + c.name },
+        { label: "Operation:" + c.operation },
+        { label: "Template path:" + c.templatePath },
+      ]
+    }));
   }
 }
 
