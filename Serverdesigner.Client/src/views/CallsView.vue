@@ -14,7 +14,7 @@ import CallService from "../services/CallService.js";
         </div>
         <div class="callsContent">
             <div class="tree">
-                <Tree selectionMode="single" v-bind:value="treeNodes" v-on:node-select="onNodeSelect">  
+                <Tree selectionMode="single" v-bind:value="treeNodes" v-on:node-select="onNodeSelect" >  
                 </Tree>
              <div class="editarea" v-if="'data' in currentNode">
                 <EditCallComponent v-bind:call="currentNode" v-on:change="updateTree"></EditCallComponent>
