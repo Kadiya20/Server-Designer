@@ -16,12 +16,13 @@ import CallService from "../services/CallService.js";
             <div class="tree">
                 <Tree selectionMode="single" v-bind:value="treeNodes" v-on:node-select="onNodeSelect">  
                 </Tree>
+            </div>
              <div class="editarea" v-if="'data' in currentNode">
                 <EditCallComponent v-bind:call="currentNode" v-on:change="updateTree"></EditCallComponent>
             </div>
         </div>
     </div>
-</div>
+
 </template>
 
 <style scoped>
@@ -31,14 +32,31 @@ import CallService from "../services/CallService.js";
 }
 .callsContent {
     display: flex;
+    flex-direction: row;
+    height: 80vh;
+    flex-wrap: nowrap;
+    border: 1px lightgrey solid;
 }
 .tree {
-    flex: 0 1 30em;
-    visibility: visible;
+    /* flex: 0 1 30em;
+    visibility: visible; */
+    width: 33%;
+border-right: 1px lightgrey solid;
+background-color: white;
+resize: horizontal;
+overflow: auto;
     
 }
+
+.p-tree {
+    border: none;
+}
 .editarea {
-    flex-grow: 1;
+    width: 33%;
+border-right: 1px lightgrey solid;
+background-color: #fff;
+resize: horizontal;
+overflow: hidden;
 }
 
 
