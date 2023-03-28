@@ -16,8 +16,8 @@ class CallService {
   }
 
   deleteCall(call) {
-    this.calls = this.calls.filter(callInService => callInService.data == call.data);
-    return this.calls;
+    console.log(call);
+    this.calls = this.calls.filter(c => c.name != call.name);
   }
 
   getCalls() {

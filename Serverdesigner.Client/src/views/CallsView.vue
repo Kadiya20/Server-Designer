@@ -62,8 +62,7 @@ export default {
             if (button == "new") {
                 this.addCall();
             }
-            if(button == "delete")
-            {  
+            if(button == "delete"){  
                this.deleteCall(this.currentNode);
             }
         },
@@ -79,10 +78,7 @@ export default {
             this.treeNodes = CallService.getCalls();
         },
         deleteCall(call){
-            if (call in CallService.calls)
-            {
-                CallService.deleteCall();
-            }
+            CallService.deleteCall(call.data);
             this.treeNodes = CallService.getCalls();
         },
     },
