@@ -15,6 +15,11 @@ class CallService {
     });
   }
 
+  deleteCall(call) {
+    this.calls = this.calls.filter(callInService => callInService.data == call.data);
+    return this.calls;
+  }
+
   getCalls() {
     return this.calls.map(c => ({
       label: c.name, data: c, children: [

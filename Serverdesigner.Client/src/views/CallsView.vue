@@ -14,7 +14,7 @@ import CallService from "../services/CallService.js";
         </div>
         <div class="callsContent">
             <div class="tree">
-                <Tree selectionMode="single" v-bind:value="treeNodes" v-on:node-select="onNodeSelect" >  
+                <Tree ref="tree" v-model:selectionKeys="selectedKey" selectionMode="single" v-bind:value="treeNodes" v-on:node-select="onNodeSelect" >  
                 </Tree>
              <div class="editarea" v-if="'data' in currentNode">
                 <EditCallComponent v-bind:call="currentNode" v-on:change="updateTree"></EditCallComponent>
@@ -54,13 +54,17 @@ export default {
         };
     },
     mounted() {
-        //CallService.getCalls().then((data) => (this.treeNodes = data));
+
         this.treeNodes = CallService.getCalls();
     },
     methods: {
         processButtonClick(button) {
             if (button == "new") {
                 this.addCall();
+            }
+            if(button == "delete")
+            {  
+               this.deleteCall(this.currentNode);
             }
         },
         addCall() {
@@ -69,10 +73,18 @@ export default {
         },
         onNodeSelect(node) {
             this.currentNode = node;
+            this.$refs.tree.expandedKeys = [node.key];
         },
         updateTree() {
             this.treeNodes = CallService.getCalls();
-        }
+        },
+        deleteCall(call){
+            if (call in CallService.calls)
+            {
+                CallService.deleteCall();
+            }
+            this.treeNodes = CallService.getCalls();
+        },
     },
 };
 </script>
