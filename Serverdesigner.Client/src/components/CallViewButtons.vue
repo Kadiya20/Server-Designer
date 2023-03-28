@@ -26,10 +26,10 @@
         <div class="vl"></div>
 
         <div id="third-btn-section" class="btn-section">
-            <button>
+            <button v-on:click="$emit('buttonClick', 'up')">
                 <img src="@/assets/images/up.png" class="btn-col" />Up
             </button>
-            <button>
+            <button v-on:click="$emit('buttonClick', 'down')">
                 <img src="@/assets/images/down.png" class="btn-col" />Down
             </button>
             <button>

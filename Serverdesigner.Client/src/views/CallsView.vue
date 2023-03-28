@@ -14,7 +14,7 @@ import CallService from "../services/CallService.js";
         </div>
         <div class="callsContent">
             <div class="tree">
-                <Tree selectionMode="single" v-bind:value="treeNodes" v-on:node-select="onNodeSelect" >  
+                <Tree selectionMode="single" v-bind:value="treeNodes" v-on:node-select="onNodeSelect">  
                 </Tree>
             </div>
              <div class="editarea" v-if="'data' in currentNode">
@@ -30,6 +30,7 @@ import CallService from "../services/CallService.js";
     display: flex;
     flex-direction: column;
 }
+
 .callsContent {
     display: flex;
     flex-direction: row;
@@ -37,29 +38,28 @@ import CallService from "../services/CallService.js";
     flex-wrap: nowrap;
     border: 1px lightgrey solid;
 }
+
 .tree {
     /* flex: 0 1 30em;
     visibility: visible; */
     width: 33%;
-border-right: 1px lightgrey solid;
-background-color: white;
-resize: horizontal;
-overflow: auto;
-    
+    border-right: 1px lightgrey solid;
+    background-color: white;
+    resize: horizontal;
+    overflow: auto;
 }
 
 .p-tree {
     border: none;
 }
+
 .editarea {
     width: 33%;
-border-right: 1px lightgrey solid;
-background-color: #fff;
-resize: horizontal;
-overflow: hidden;
+    border-right: 1px lightgrey solid;
+    background-color: #fff;
+    resize: horizontal;
+    overflow: hidden;
 }
-
-
 </style>
 
 <script>
@@ -69,16 +69,27 @@ export default {
         return {
             treeNodes: [],
             currentNode: {},
+            currentSelectedNodeIndex: null
         };
     },
     mounted() {
         //CallService.getCalls().then((data) => (this.treeNodes = data));
-        this.treeNodes = CallService.getCalls();
+        // this.treeNodes = CallService.getCalls();
     },
     methods: {
         processButtonClick(button) {
             if (button == "new") {
                 this.addCall();
+            }
+            if (button == "up") {
+                if (this.treeNodes.length > 1 && this.currentSelectedNodeIndex != 0){
+                    this.btnUpClick(this.currentNode);
+                }
+            }
+            if (button == "down") {
+                if (this.treeNodes.length > 1 && this.currentSelectedNodeIndex < (this.treeNodes.length-1)){
+                    this.btnDownClick(this.currentNode);
+                }
             }
         },
         addCall() {
@@ -87,10 +98,39 @@ export default {
         },
         onNodeSelect(node) {
             this.currentNode = node;
+            this.currentSelectedNodeIndex = this.treeNodes.indexOf(node);
+            console.log("current selected node is : " + this.currentSelectedNodeIndex);
+            console.log("treeNode length: " + this.treeNodes.length);
         },
         updateTree() {
             this.treeNodes = CallService.getCalls();
+        },
+        btnUpClick(currentNode) {
+
+            let oldIndex = this.currentSelectedNodeIndex; 
+            console.log("oldIndex : " + oldIndex);
+            let beforeIndexNode = CallService.calls.at(oldIndex - 1); 
+            console.log("beforeIndexNode: " + beforeIndexNode);
+
+            CallService.calls[oldIndex - 1] = CallService.calls.at(oldIndex); 
+            CallService.calls[oldIndex] = beforeIndexNode;
+            console.info(CallService.calls);
+            this.treeNodes = CallService.getCalls();
+        },
+        btnDownClick(currentNode) {
+            let oldIndex = this.currentSelectedNodeIndex; // 1
+            console.log("oldIndex : " + oldIndex);
+            let afterIndexNode = CallService.calls.at(oldIndex + 1); // 2  
+            console.log("beforeIndexNode: " + afterIndexNode);
+
+            CallService.calls[oldIndex + 1] = CallService.calls.at(oldIndex); // calls[2] = 1 
+            CallService.calls[oldIndex] = afterIndexNode; // calls[1] = 2
+            console.info(CallService.calls);
+            this.treeNodes = CallService.getCalls();
         }
-    },
+
+        }
+
+    
 };
 </script>
