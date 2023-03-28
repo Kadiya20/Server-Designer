@@ -29,10 +29,10 @@
             <button>
                 <img src="@/assets/images/up.png" class="btn-col" />Up
             </button>
-            <button>
+            <button >
                 <img src="@/assets/images/down.png" class="btn-col" />Down
             </button>
-            <button>
+            <button v-on:click="$emit('buttonClick', 'delete')">
                 <img src="@/assets/images/delete.png" class="btn-col" />Delete
             </button>
             <button>
