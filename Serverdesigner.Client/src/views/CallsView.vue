@@ -73,6 +73,7 @@ export default {
         };
     },
     mounted() {
+
         //CallService.getCalls().then((data) => (this.treeNodes = data));
         // this.treeNodes = CallService.getCalls();
     },
@@ -90,6 +91,8 @@ export default {
                 if (this.treeNodes.length > 1 && this.currentSelectedNodeIndex < (this.treeNodes.length-1)){
                     this.btnDownClick(this.currentNode);
                 }
+            if(button == "delete"){  
+               this.deleteCall(this.currentNode);
             }
         },
         addCall() {
@@ -98,9 +101,12 @@ export default {
         },
         onNodeSelect(node) {
             this.currentNode = node;
+
             this.currentSelectedNodeIndex = this.treeNodes.indexOf(node);
             console.log("current selected node is : " + this.currentSelectedNodeIndex);
             console.log("treeNode length: " + this.treeNodes.length);
+            
+            this.$refs.tree.expandedKeys = [node.key];
         },
         updateTree() {
             this.treeNodes = CallService.getCalls();
@@ -127,10 +133,11 @@ export default {
             CallService.calls[oldIndex] = afterIndexNode; // calls[1] = 2
             console.info(CallService.calls);
             this.treeNodes = CallService.getCalls();
-        }
-
-        }
-
-    
+        },
+        deleteCall(call){
+            CallService.deleteCall(call.data);
+            this.treeNodes = CallService.getCalls();
+        },
+    },
 };
 </script>
