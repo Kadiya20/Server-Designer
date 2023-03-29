@@ -91,6 +91,7 @@ export default {
                 if (this.treeNodes.length > 1 && this.currentSelectedNodeIndex < (this.treeNodes.length-1)){
                     this.btnDownClick(this.currentNode);
                 }
+            }
             if(button == "delete"){  
                this.deleteCall(this.currentNode);
             }
