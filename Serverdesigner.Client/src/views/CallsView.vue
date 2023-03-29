@@ -95,6 +95,11 @@ export default {
             if(button == "delete"){  
                this.deleteCall(this.currentNode);
             }
+            if (button === 'clone') {
+                  const clonedCall = CallService.cloneCall(this.currentNode.data);
+                  CallService.addCall(clonedCall);
+                 this.treeNodes = CallService.getCalls();
+                 }
         },
         addCall() {
             CallService.addCall();
