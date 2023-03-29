@@ -18,7 +18,7 @@ import CallService from "../services/CallService.js";
                 </Tree>
             </div>
              <div class="editarea" v-if="'data' in currentNode">
-                <EditCallComponent v-bind:call="currentNode" v-on:change="updateTree"></EditCallComponent>
+                <EditCallComponent v-bind:call="currentNode" v-on:change="updateTree" ></EditCallComponent>
             </div>
         </div>
     </div>
@@ -91,6 +91,7 @@ export default {
                 if (this.treeNodes.length > 1 && this.currentSelectedNodeIndex < (this.treeNodes.length-1)){
                     this.btnDownClick(this.currentNode);
                 }
+            }
             if(button == "delete"){  
                this.deleteCall(this.currentNode);
             }
@@ -136,6 +137,9 @@ export default {
         },
         deleteCall(call){
             CallService.deleteCall(call.data);
+            if (call === this.currentNode) {
+             this.currentNode = {}; // clear the edit area
+           }
             this.treeNodes = CallService.getCalls();
         },
     },
