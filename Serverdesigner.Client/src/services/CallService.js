@@ -20,6 +20,16 @@ class CallService {
     this.calls = this.calls.filter(c => c.name != call.name);
   }
 
+  cloneCall(call) {
+    const clonedCall = {
+      name: call.name.replace(/^(NewCall \d+)/, '$1 Clone'),
+      operation: call.operation,
+      templatePath: call.templatePath
+    };
+    this.calls.push(clonedCall);
+   }
+  
+
   getCalls() {
     return this.calls.map(c => ({
       label: c.name, data: c, children: [

@@ -35,7 +35,7 @@
             <button v-on:click="$emit('buttonClick', 'delete')">
                 <img src="@/assets/images/delete.png" class="btn-col" />Delete
             </button>
-            <button>
+            <button v-on:click="$emit('buttonClick', 'clone')">
                 <img src="@/assets/images/clone.png" class="btn-col" />Clone
             </button>
             <button>
