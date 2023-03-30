@@ -18,7 +18,7 @@ import CallService from "../services/CallService.js";
                 </Tree>
             </div>
              <div class="editarea" v-if="'data' in currentNode">
-                <EditCallComponent v-bind:call="currentNode" v-on:change="updateTree"></EditCallComponent>
+                <EditCallComponent v-bind:call="currentNode" v-on:change="updateTree" ></EditCallComponent>
             </div>
         </div>
     </div>
@@ -95,6 +95,11 @@ export default {
             if(button == "delete"){  
                this.deleteCall(this.currentNode);
             }
+            if (button === 'clone') {
+                //   const clonedCall = CallService.cloneCall(this.currentNode.data);
+                  CallService.cloneCall(this.currentNode.data);
+                 this.treeNodes = CallService.getCalls();
+                 }
         },
         addCall() {
             CallService.addCall();
@@ -112,7 +117,7 @@ export default {
         updateTree() {
             this.treeNodes = CallService.getCalls();
         },
-        btnUpClick(currentNode) {
+        btnUpClick() {
 
             let oldIndex = this.currentSelectedNodeIndex; 
             console.log("oldIndex : " + oldIndex);
@@ -124,7 +129,7 @@ export default {
             console.info(CallService.calls);
             this.treeNodes = CallService.getCalls();
         },
-        btnDownClick(currentNode) {
+        btnDownClick() {
             let oldIndex = this.currentSelectedNodeIndex; // 1
             console.log("oldIndex : " + oldIndex);
             let afterIndexNode = CallService.calls.at(oldIndex + 1); // 2  
@@ -137,6 +142,9 @@ export default {
         },
         deleteCall(call){
             CallService.deleteCall(call.data);
+            if (call === this.currentNode) {
+             this.currentNode = {}; // clear the edit area
+           }
             this.treeNodes = CallService.getCalls();
         },
     },
