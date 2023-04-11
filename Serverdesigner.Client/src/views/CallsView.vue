@@ -69,7 +69,7 @@ export default {
         return {
             treeNodes: [],
             currentNode: {},
-            currentSelectedNodeIndex: null
+            currentSelectedNodeIndex: null,
         };
     },
     mounted() {
@@ -100,6 +100,16 @@ export default {
                   CallService.cloneCall(this.currentNode.data);
                  this.treeNodes = CallService.getCalls();
                  }
+            if (button == 'azLogin') {
+                console.log("azLogin Btn clicked");
+                if (this.currentSelectedNodeIndex != null)
+                {
+                    console.log("currentNode is not null");
+                    this.addAzureAD(this.currentNode.data);
+                    
+                    console.info(this.currentNode);
+                }   
+            }
         },
         addCall() {
             CallService.addCall();
@@ -111,8 +121,6 @@ export default {
             this.currentSelectedNodeIndex = this.treeNodes.indexOf(node);
             console.log("current selected node is : " + this.currentSelectedNodeIndex);
             console.log("treeNode length: " + this.treeNodes.length);
-            
-            this.$refs.tree.expandedKeys = [node.key];
         },
         updateTree() {
             this.treeNodes = CallService.getCalls();
@@ -146,7 +154,17 @@ export default {
              this.currentNode = {}; // clear the edit area
            }
             this.treeNodes = CallService.getCalls();
+            console.info(CallService.calls);
         },
+        addAzureAD(call) {
+            console.log("---CallsView.addAzureAD starts---");
+            CallService.showAzureAD = true;
+            console.log(CallService.showAzureAD);
+            CallService.addAzureAD(call.data);
+            this.treeNodes = CallService.getCalls();
+            // this.treeNodes = CallService.getCalls();
+
+        }
     },
 };
 </script>
