@@ -104,10 +104,9 @@ export default {
                 console.log("azLogin Btn clicked");
                 if (this.currentSelectedNodeIndex != null)
                 {
-                    console.log("currentNode is not null");
+                    console.log("currentNode is not null, CallsView.addAzureAD starts");
                     this.addAzureAD(this.currentNode.data);
-                    
-                    console.info(this.currentNode);
+                    this.treeNodes = CallService.getCalls();
                 }   
             }
         },
@@ -158,12 +157,9 @@ export default {
         },
         addAzureAD(call) {
             console.log("---CallsView.addAzureAD starts---");
-            CallService.showAzureAD = true;
-            console.log(CallService.showAzureAD);
-            CallService.addAzureAD(call.data);
-            this.treeNodes = CallService.getCalls();
-            // this.treeNodes = CallService.getCalls();
-
+                console.log("currentSelectedNodeIndex is: " + this.currentSelectedNodeIndex);
+                CallService.addAzureAD(call.data, this.currentSelectedNodeIndex);
+            
         }
     },
 };

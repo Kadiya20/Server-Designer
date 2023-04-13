@@ -1,27 +1,26 @@
 class CallService {
   constructor() {
     this.calls = [];
-    this.Counter = 0;
-    this.showAzureAD = false;
+    this.counter = 0;
+    
   }
 
   addCall() {
-    const name = "NewCall " + (++this.Counter);
+    const name = "NewCall " + (++this.counter);
     const operation = "";
     const templatePath = "";
-    const azLogin = "";
+    
     this.calls.push({
       name: name,
       operation: operation,
       templatePath: templatePath,
-      azLogin: azLogin
     });
   }
 
   deleteCall(call) {
     console.log(call);
     this.calls = this.calls.filter(c => c.name != call.name); 
-    console.log(this.Counter);
+    console.log(this.counter);
   }
 
   cloneCall(call) {
@@ -41,8 +40,8 @@ class CallService {
         { label: "Operation:" + c.operation },
         { label: "Template path:" + c.templatePath },
       ];
-        if (this.showAzureAD && c.addAzureAD){
-          children.push({ label: "AzureAD"})
+        if (c.azLogin){
+          children.push({ label: c.azLogin })
         }
         return { label: c.name, data: c, children };
       });
@@ -52,14 +51,19 @@ class CallService {
     this.showAzureAD = !this.showAzureAD
   }
 
-  addAzureAD(call, index) {
+  addAzureAD(call, azLogin) {
     console.log("---- CallService.addAzureAD starts----");
     console.info(this.calls);
-    console.log(index);
-    this.showAzureAD = true;
-    this.calls[index].azLogin = "AzureLogin";
-    console.log(this.calls[index].azLogin);
-    return true;
+  
+      const found = this.calls.find(c=> c.name === call.name);
+      if (!found) { return false; }
+      if (!found.azLogin) {found.azLogin = "AzureAD Login"}
+
+      found.push(azLogin);
+
+
+      // this.calls[index].children.push({label: "AzureAD Login"});
+      
     // console.log(this.calls[currentSelectedNodeIndex].children.Counter);
 
     // this.calls[currentSelectedNodeIndex].azLogin = "test";
