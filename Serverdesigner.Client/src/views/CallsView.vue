@@ -4,6 +4,8 @@ import CallViewButtons from '../components/CallViewButtons.vue';
 import 'primeicons/primeicons.css';
 import EditCallComponent from '../components/EditCallComponent.vue';
 import CallService from "../services/CallService.js";
+import InputParameterComponent from '../components/InputParamterComponent.vue';
+
 
 
 </script>
@@ -18,7 +20,16 @@ import CallService from "../services/CallService.js";
                 </Tree>
             </div>
              <div class="editarea" v-if="'data' in currentNode">
-                <EditCallComponent v-bind:call="currentNode" v-on:change="updateTree" ></EditCallComponent>
+                <!-- <div v-if="!showInputParameters"> -->
+          <EditCallComponent v-bind:call="currentNode" v-on:change="updateTree"></EditCallComponent>
+             <div v-if="currentNode.showInputParameters">
+              <InputParameterComponent v-for="(inputParam, index) in currentNode.inputParameters" 
+                            v-bind:key="index" v-bind:inputParam="inputParam"></InputParameterComponent>
+             </div>
+           <!-- </div>
+        <div v-else>
+          <InputParameterComponent v-for="(inputParam, index) in inputParams" v-bind:key="index" v-bind:inputParam="inputParam"></InputParameterComponent>
+        </div> -->
             </div>
         </div>
     </div>
@@ -69,7 +80,7 @@ export default {
         return {
             treeNodes: [],
             currentNode: {},
-            currentSelectedNodeIndex: null
+            currentSelectedNodeIndex: null,
         };
     },
     mounted() {
@@ -99,7 +110,13 @@ export default {
                 //   const clonedCall = CallService.cloneCall(this.currentNode.data);
                   CallService.cloneCall(this.currentNode.data);
                  this.treeNodes = CallService.getCalls();
-                 }
+            }
+            if (button == 'inputParams') {
+                console.log("Inputparams is clickable!!");
+                this.addInputParameter(this.currentNode);
+                this.treeNodes = CallService.getCalls();
+
+             }
         },
         addCall() {
             CallService.addCall();
@@ -107,12 +124,11 @@ export default {
         },
         onNodeSelect(node) {
             this.currentNode = node;
-
+    
             this.currentSelectedNodeIndex = this.treeNodes.indexOf(node);
             console.log("current selected node is : " + this.currentSelectedNodeIndex);
             console.log("treeNode length: " + this.treeNodes.length);
             
-            this.$refs.tree.expandedKeys = [node.key];
         },
         updateTree() {
             this.treeNodes = CallService.getCalls();
@@ -147,6 +163,17 @@ export default {
            }
             this.treeNodes = CallService.getCalls();
         },
+       addInputParameter(call) {
+          CallService.addInputParameter(call.data);
+        },
+
+    //   removeInputParameter(parameter) {
+    //        const index = this.currentNode.inputParameters.indexOf(parameter);
+    //        if (index > -1) {
+    //       this.currentNode.inputParameters.splice(index, 1);
+    //            }            
+    //     },
+
     },
 };
 </script>
