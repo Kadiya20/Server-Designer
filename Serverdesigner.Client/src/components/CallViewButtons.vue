@@ -12,7 +12,7 @@
         <div class="vl"></div>
 
         <div id="second-btn-section" class="btn-section">
-            <button v-on:click="$emit('buttonClick', 'InputParams')">
+            <button v-on:click="$emit('buttonClick', 'inputParams')">
                 <img src="@/assets/images/inputParamIcon.png" class="btn-col" />Input Parameters
             </button>
             <button>

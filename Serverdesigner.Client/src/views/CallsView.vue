@@ -22,6 +22,10 @@ import InputParameterComponent from '../components/InputParamterComponent.vue';
              <div class="editarea" v-if="'data' in currentNode">
                 <!-- <div v-if="!showInputParameters"> -->
           <EditCallComponent v-bind:call="currentNode" v-on:change="updateTree"></EditCallComponent>
+             <div v-if="currentNode.showInputParameters">
+              <InputParameterComponent v-for="(inputParam, index) in currentNode.inputParameters" 
+                            v-bind:key="index" v-bind:inputParam="inputParam"></InputParameterComponent>
+             </div>
            <!-- </div>
         <div v-else>
           <InputParameterComponent v-for="(inputParam, index) in inputParams" v-bind:key="index" v-bind:inputParam="inputParam"></InputParameterComponent>
@@ -77,9 +81,6 @@ export default {
             treeNodes: [],
             currentNode: {},
             currentSelectedNodeIndex: null,
-            selectedCall: null,
-            inputParams: [],
-            showInputParameters :false,
         };
     },
     mounted() {
@@ -110,10 +111,11 @@ export default {
                   CallService.cloneCall(this.currentNode.data);
                  this.treeNodes = CallService.getCalls();
             }
-            if (button == 'InputParams') {
-                this.showInputParameters = true;
-                this.addInputParameter(this.currentNode.data);
+            if (button == 'inputParams') {
+                console.log("Inputparams is clickable!!");
+                this.addInputParameter(this.currentNode);
                 this.treeNodes = CallService.getCalls();
+
              }
         },
         addCall() {
@@ -122,7 +124,7 @@ export default {
         },
         onNodeSelect(node) {
             this.currentNode = node;
-            this.selectedCall = node.data;
+    
             this.currentSelectedNodeIndex = this.treeNodes.indexOf(node);
             console.log("current selected node is : " + this.currentSelectedNodeIndex);
             console.log("treeNode length: " + this.treeNodes.length);
@@ -162,7 +164,7 @@ export default {
             this.treeNodes = CallService.getCalls();
         },
        addInputParameter(call) {
-        CallService.addInputParameter(call.data,true);
+          CallService.addInputParameter(call.data);
         },
 
     //   removeInputParameter(parameter) {

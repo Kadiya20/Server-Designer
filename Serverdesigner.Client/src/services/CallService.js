@@ -1,20 +1,17 @@
 class CallService {
   constructor() {
     this.calls = [];
-    // this.Inputparameter =[];
-    this.Counter = 0;
-    this.showInputParameters = false;
+    this.counter = 0;
   }
 
   addCall() {
-    const name = "NewCall " + (++this.Counter);
+    const name = "NewCall " + (++this.counter);
     const operation = "";
     const templatePath = "";
     this.calls.push({
       name: name,
       operation: operation,
       templatePath: templatePath,
-      InputParameters: []
     });
   }
 
@@ -30,31 +27,20 @@ class CallService {
       templatePath: call.templatePath,
     };
     this.calls.push(clonedCall);
-   }
+  }
 
-   addInputParameter(call, inputParameter,show) {
-    show = this.showInputParameters;
-    if(show)
-    {
-      const index = this.calls.indexOf(call);
-    if (index !== -1) {
-      if (!this.calls[index].InputParameters) {
-        this.calls[index].InputParameters = [];
-      }
-      this.calls[index].InputParameters.push(inputParameter);
-      this.calls[index].children.push({ label: "InputParameter: " + inputParameter });
+  addInputParameter(call, inputparameter) {
+    const found = this.calls.find(c => c.name === call.name);
+    if (!found) { return false; }
+    if (found.inputParameters) {
+      // input parameters already exist for the call
+      return false;
+    } else {
+      found.inputParameters = [];
+      found.inputParameters.push({ inputparameter }); 
+      return true;
     }
   }
-  }
-
-
-  // removeInputParameter(call, inputParameter) {
-  //   const index = this.calls.indexOf(call);
-  //   if (index !== -1 && this.calls[index].inputParameters) {
-  //     this.calls[index].inputParameters = this.calls[index].inputParameters.filter(p => p !== inputParameter);
-  //   }
-  // }
-  
 
   getCalls() {
     return this.calls.map(c => {
@@ -63,13 +49,12 @@ class CallService {
         { label: "Operation: " + c.operation },
         { label: "Template path: " + c.templatePath },
       ];
-      if (this.showInputParameters && c.InputParameters) { 
-        children.push({ label: "Input Parameters:", children: c.InputParameters.map(p => ({ label: p })) });
+      if (c.inputParameters) {
+        children.push({ label: "Input Parameters" });
       }
       return { label: c.name, data: c, children };
     });
   }
-  
 }
 
 export default new CallService();

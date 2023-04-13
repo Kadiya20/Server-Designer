@@ -8,13 +8,24 @@
   </template>
   
   <script>
-  export default {
-    props: {
-      inputParam: Object,
+export default {
+  props: {
+    inputParam: Object,
+    call: Object,
+  },
+  methods: {
+    addInputParameter() {
+      this.$emit("add-input-parameter", this.call, {
+        parameter: this.inputParam.parameter,
+        value: this.inputParam.value, 
+      });
     },
-  };
-  </script>
-  
+  },
+};
+</script>
+
+
+
   <style scoped>
    .InputParameterComponent{
         display: flex;
