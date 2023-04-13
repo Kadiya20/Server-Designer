@@ -110,13 +110,21 @@ export default {
                 //   const clonedCall = CallService.cloneCall(this.currentNode.data);
                   CallService.cloneCall(this.currentNode.data);
                  this.treeNodes = CallService.getCalls();
-            }
+                 }
             if (button == 'inputParams') {
                 console.log("Inputparams is clickable!!");
                 this.addInputParameter(this.currentNode);
                 this.treeNodes = CallService.getCalls();
-
              }
+            if (button == 'azLogin') {
+                console.log("azLogin Btn clicked");
+                if (this.currentSelectedNodeIndex != null)
+                {
+                    console.log("currentNode is not null, CallsView.addAzureAD starts");
+                    this.addAzureAD(this.currentNode.data);
+                    this.treeNodes = CallService.getCalls();
+                }   
+            }
         },
         addCall() {
             CallService.addCall();
@@ -128,7 +136,6 @@ export default {
             this.currentSelectedNodeIndex = this.treeNodes.indexOf(node);
             console.log("current selected node is : " + this.currentSelectedNodeIndex);
             console.log("treeNode length: " + this.treeNodes.length);
-            
         },
         updateTree() {
             this.treeNodes = CallService.getCalls();
@@ -162,10 +169,17 @@ export default {
              this.currentNode = {}; // clear the edit area
            }
             this.treeNodes = CallService.getCalls();
+            console.info(CallService.calls);
         },
-       addInputParameter(call) {
+        addInputParameter(call) {
           CallService.addInputParameter(call.data);
         },
+        addAzureAD(call) {
+            console.log("---CallsView.addAzureAD starts---");
+                console.log("currentSelectedNodeIndex is: " + this.currentSelectedNodeIndex);
+                CallService.addAzureAD(call.data, this.currentSelectedNodeIndex);
+        }
+
 
     //   removeInputParameter(parameter) {
     //        const index = this.currentNode.inputParameters.indexOf(parameter);
