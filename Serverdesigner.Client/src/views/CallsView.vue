@@ -104,9 +104,9 @@ export default {
                 }
             }
             if(button == "delete"){  
-               this.deleteCall(this.currentNode);
+               this.deleteButtonClick(this.currentNode);
             }
-            if (button === 'clone') {
+            if (button == 'clone') {
                 //   const clonedCall = CallService.cloneCall(this.currentNode.data);
                   CallService.cloneCall(this.currentNode.data);
                  this.treeNodes = CallService.getCalls();
@@ -118,13 +118,10 @@ export default {
              }
             if (button == 'azLogin') {
                 console.log("azLogin Btn clicked");
-                if (this.currentSelectedNodeIndex != null)
-                {
-                    console.log("currentNode is not null, CallsView.addAzureAD starts");
-                    this.addAzureAD(this.currentNode.data);
-                    this.treeNodes = CallService.getCalls();
-                }   
-            }
+                console.log("currentNode is not null, CallsView.addAzureAD starts");
+                this.addAzureAD(this.currentNode);
+                this.treeNodes = CallService.getCalls();
+            }   
         },
         addCall() {
             CallService.addCall();
@@ -163,13 +160,18 @@ export default {
             console.info(CallService.calls);
             this.treeNodes = CallService.getCalls();
         },
-        deleteCall(call){
-            CallService.deleteCall(call.data);
-            if (call === this.currentNode) {
-             this.currentNode = {}; // clear the edit area
-           }
-            this.treeNodes = CallService.getCalls();
-            console.info(CallService.calls);
+        deleteButtonClick(call){
+            const nodeData = call.data;
+            if ('inputParameters' in nodeData) {
+              // delete the input parameter for the clicked call
+              const inputParameter = nodeData.inputParameters;
+              CallService.deleteInputParameter(nodeData, inputParameter);
+           } else {
+             // delete the clicked call
+              CallService.deleteCall(nodeData);
+        }
+           this.treeNodes = CallService.getCalls();
+           this.currentNode = {}; // clear the edit area
         },
         addInputParameter(call) {
           CallService.addInputParameter(call.data);
@@ -177,8 +179,8 @@ export default {
         addAzureAD(call) {
             console.log("---CallsView.addAzureAD starts---");
                 console.log("currentSelectedNodeIndex is: " + this.currentSelectedNodeIndex);
-                CallService.addAzureAD(call.data, this.currentSelectedNodeIndex);
-        }
+                CallService.addAzureAD(call.data);
+        },
 
 
     //   removeInputParameter(parameter) {
@@ -186,8 +188,7 @@ export default {
     //        if (index > -1) {
     //       this.currentNode.inputParameters.splice(index, 1);
     //            }            
-    //     },
-
-    },
+       },
+    
 };
 </script>

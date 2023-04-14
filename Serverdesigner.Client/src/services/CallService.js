@@ -34,13 +34,30 @@ class CallService {
     const found = this.calls.find(c => c.name === call.name);
     if (!found) { return false; }
     if (found.inputParameters) {
-      // input parameters already exist for the call
       return false;
     } else {
       found.inputParameters = [];
       found.inputParameters.push({ inputparameter }); 
       return true;
     }
+  }
+
+  addAzureAD(call) {
+    console.log("---- CallService.addAzureAD starts----");
+    console.info(this.calls); 
+    const found = this.calls.find(c => c.name === call.name);
+    if (!found) { return false; }
+    found.azLogin = "AzureAD Login";
+    return true;
+  
+  }
+
+  deleteInputParameter(call, inputParameter) {
+    const found = this.calls.find(c => c.name === call.name);
+    if (!found || !found.inputParameters) { return false; }
+
+    found.inputParameters = found.inputParameters.filter(ip => ip !== inputParameter);
+    return true;
   }
 
   getCalls() {
@@ -54,23 +71,13 @@ class CallService {
         children.push({ label: "Input Parameters" });
       }
         if (c.azLogin){
-          children.push({ label: c.azLogin })
+          children.push({ label: "Azure Login" })
         }
         return { label: c.name, data: c, children };
       });
     }
 
-  addAzureAD(call, azLogin) {
-    console.log("---- CallService.addAzureAD starts----");
-    console.info(this.calls);
   
-      const found = this.calls.find(c=> c.name === call.name);
-      if (!found) { return false; }
-      if (!found.azLogin) {found.azLogin = "AzureAD Login"}
-
-      found.push(azLogin);
-  
-  }
 }
 
 export default new CallService();
