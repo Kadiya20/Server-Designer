@@ -118,12 +118,9 @@ export default {
              }
             if (button == 'azLogin') {
                 console.log("azLogin Btn clicked");
-                if (this.currentSelectedNodeIndex != null)
-                {
                     console.log("currentNode is not null, CallsView.addAzureAD starts");
-                    this.addAzureAD(this.currentNode.data);
+                    this.addAzureAD(this.currentNode);
                     this.treeNodes = CallService.getCalls();
-                }   
             }
         },
         addCall() {
@@ -176,8 +173,7 @@ export default {
         },
         addAzureAD(call) {
             console.log("---CallsView.addAzureAD starts---");
-                console.log("currentSelectedNodeIndex is: " + this.currentSelectedNodeIndex);
-                CallService.addAzureAD(call.data, this.currentSelectedNodeIndex);
+                CallService.addAzureAD(call.data);
         }
 
 

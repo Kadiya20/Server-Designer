@@ -60,16 +60,20 @@ class CallService {
       });
     }
 
-  addAzureAD(call, azLogin) {
+  addAzureAD(call) {
     console.log("---- CallService.addAzureAD starts----");
-    console.info(this.calls);
-  
-      const found = this.calls.find(c=> c.name === call.name);
-      if (!found) { return false; }
-      if (!found.azLogin) {found.azLogin = "AzureAD Login"}
+    console.info(this.calls); 
+    const found = this.calls.find(c => c.name === call.name);
+    if (!found) { return false; }
+    found.azLogin = "AzureAD Login";
+    return true;
+  }
 
-      found.push(azLogin);
-  
+  isDuplicate(editedCallName){
+    // const found = this.calls.find(c=> c.name == editedCallName);
+    // console.info(found);
+    if (this.calls.find(c=> c.name == editedCallName)) { return true; }
+    return false;
   }
 }
 

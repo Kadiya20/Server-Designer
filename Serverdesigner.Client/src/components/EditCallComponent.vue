@@ -3,7 +3,7 @@
         {{  }}
         <div class="row">
             <div class="label">Name:</div>
-            <div class="control"><input v-model="call.data.name" v-on:change="$emit('change')" /></div>
+            <div class="control"><input v-model="callName" @change="checkCallName($event)"></div> <!--v-on:change="$emit('change')" v-on:change=checkCallName(call.data.name)-->
         </div>
         <div class="row">
             <div class="label">Operation:</div>
@@ -57,6 +57,7 @@
 <script>
 import Dropdown from 'primevue/dropdown';
 import FileUpload from "primevue/fileupload";
+import CallService from '../services/CallService';
 
 export default {
   components: {
@@ -69,7 +70,22 @@ export default {
   data() {
     return {
       operationOptions: ["GenerateDocument", "GenerateSpreadsheet", "GenerateSlides"],
+      callName: ""
     };
   },
+  mounted() {
+    this.callName = this.call.data.name;
+  },
+  methods: {
+    checkCallName(){
+        if (CallService.isDuplicate(this.callName)){
+            console.log("isDuplicate true");
+            alert("Duplicate Name");
+            return;
+        }
+        // eslint-disable-next-line vue/no-mutating-props
+        this.call.data.name = this.callName;
+    }
+  }
 };
 </script>
