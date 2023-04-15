@@ -8,7 +8,7 @@ class CallService {
     const name = "NewCall " + (++this.counter);
     const operation = "";
     const templatePath = "";
-    
+
     this.calls.push({
       name: name,
       operation: operation,
@@ -37,19 +37,20 @@ class CallService {
       return false;
     } else {
       found.inputParameters = [];
-      found.inputParameters.push({ inputparameter }); 
+      found.inputParameters.push({ inputparameter });
       return true;
     }
   }
 
   addAzureAD(call) {
     console.log("---- CallService.addAzureAD starts----");
-    console.info(this.calls); 
+    console.info(this.calls);
     const found = this.calls.find(c => c.name === call.name);
     if (!found) { return false; }
-    found.azLogin = "AzureAD Login";
+    if (found.azLogin) { return false; }
+    found.azLogin = { "Mode": "", "Login Behaviour": "Auto", "AzureID App ID": "" };
     return true;
-  
+
   }
 
   deleteInputParameter(call, inputParameter) {
@@ -67,17 +68,20 @@ class CallService {
         { label: "Operation:" + c.operation },
         { label: "Template path:" + c.templatePath },
       ];
-        if (c.inputParameters) {
-        children.push({ label: "Input Parameters" });
+      if (c.inputParameters !== undefined) {
+        children.push({ label: "Input Parameters", component: "inputParameter" });
       }
-        if (c.azLogin){
-          children.push({ label: "Azure Login" })
-        }
-        return { label: c.name, data: c, children };
-      });
-    }
+      if (c.azLogin !== undefined) {
+        children.push({ label: "Azure AD Login" })
+      }
+      return { label: c.name, data: c, children };
+    });
+  }
 
-  
+  getCallData(callName) {
+    return this.calls.find(c => c.name === callName);
+  }
+
 }
 
 export default new CallService();

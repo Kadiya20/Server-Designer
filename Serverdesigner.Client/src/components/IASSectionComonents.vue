@@ -1,9 +1,9 @@
 <template>
     <div class="InputParameterComponent">
       <div class="label">Parameter:</div>
-      <div class="control"><input v-model="inputParam.parameter" /></div>
+      <div class="control"><input v-model="inputParam.parameter" v-on:change="$emit('change')" /></div>
       <div class="label">Value:</div>
-      <div class="control"><input v-model="inputParam.value" /></div>
+      <div class="control"><input v-model="inputParam.value" v-on:change="$emit('change')" /></div>
     </div>
   </template>
   
@@ -11,15 +11,9 @@
 export default {
   props: {
     inputParam: Object,
-    call: Object,
   },
   methods: {
-    addInputParameter() {
-      this.$emit("add-input-parameter", this.call, {
-        parameter: this.inputParam.parameter,
-        value: this.inputParam.value, 
-      });
-    },
+  
   },
 };
 </script>
