@@ -30,14 +30,14 @@ class CallService {
     this.calls.push(clonedCall);
   }
 
-  addInputParameter(call, inputparameter) {
+  addInputParameter(call) {
     const found = this.calls.find(c => c.name === call.name);
     if (!found) { return false; }
     if (found.inputParameters) {
       return false;
     } else {
       found.inputParameters = [];
-      found.inputParameters.push({ inputparameter });
+      found.inputParameters.push({parameter: "", value: ""});
       return true;
     }
   }
@@ -64,17 +64,19 @@ class CallService {
   getCalls() {
     return this.calls.map(c => {
       const children = [
-        { label: "Name: " + c.name },
-        { label: "Operation:" + c.operation },
-        { label: "Template path:" + c.templatePath },
+        { callName: c.name, label: "Name2: " + c.name },
+        { callName: c.name, label: "Operation:" + c.operation },
+        { callName: c.name, label: "Template path:" + c.templatePath },
       ];
       if (c.inputParameters !== undefined) {
-        children.push({ label: "Input Parameters", component: "inputParameter" });
+        children.push({ callName: c.name, label: "Input Parameters", component: "inputParameter" ,data: {
+          inputParameters: c.inputParameters
+        }});
       }
       if (c.azLogin !== undefined) {
-        children.push({ label: "Azure AD Login" })
+        children.push({ callName: c.name, label: "Azure AD Login" })
       }
-      return { label: c.name, data: c, children };
+      return { callName: c.name, label: c.name, data: c, children };
     });
   }
 

@@ -19,13 +19,13 @@ import IASSectionComponents from '../components/IASSectionComonents.vue';
                 <Tree selectionMode="single" v-bind:value="treeNodes" v-on:node-select="onNodeSelect">
                 </Tree>
             </div>
-            <div class="editarea" v-if="'data' in currentNode">
-                <EditCallComponent v-if="!currentNode.component" v-bind:call="currentNode" v-on:change="updateTree">
+            <div class="editarea" v-if="currentNode.label">
+                <EditCallComponent v-if="!currentNode.component" v-bind:call="currentCall.data"
+                    v-on:change="updateTree">
                 </EditCallComponent>
-                <div v-if="currentNode.component && currentNode.component === 'inputParameter'">
-                    <IASSectionComponents v-bind:inputParam="currentNode" v-on:change="updateTree">
-                    </IASSectionComponents>
-                </div>
+                <IASSectionComponents v-if="currentNode.component == 'inputParameter'"
+                    v-bind:inputParams="currentCall.data.inputParameters">
+                </IASSectionComponents>
             </div>
         </div>
     </div>
@@ -75,7 +75,9 @@ export default {
         return {
             treeNodes: [],
             currentNode: {},
+            currentCall: {},
             currentSelectedNodeIndex: null,
+            editComponent: "",
         };
     },
     mounted() {
@@ -90,31 +92,31 @@ export default {
             }
             if (button == "up") {
                 if (this.treeNodes.length > 1 && this.currentSelectedNodeIndex != 0) {
-                    this.btnUpClick(this.currentNode);
+                    this.btnUpClick(this.currentCall);
                 }
             }
             if (button == "down") {
                 if (this.treeNodes.length > 1 && this.currentSelectedNodeIndex < (this.treeNodes.length - 1)) {
-                    this.btnDownClick(this.currentNode);
+                    this.btnDownClick(this.currentCall);
                 }
             }
             if (button == "delete") {
-                this.deleteButtonClick(this.currentNode);
+                this.deleteButtonClick(this.currentCall);
             }
             if (button == 'clone') {
                 //   const clonedCall = CallService.cloneCall(this.currentNode.data);
-                CallService.cloneCall(this.currentNode.data);
+                CallService.cloneCall(this.currentCall.data);
                 this.treeNodes = CallService.getCalls();
             }
             if (button == 'inputParams') {
                 console.log("Inputparams is clickable!!");
-                this.addInputParameter(this.currentNode);
+                this.addInputParameter(this.currentCall);
                 this.treeNodes = CallService.getCalls();
             }
             if (button == 'azLogin') {
                 console.log("azLogin Btn clicked");
                 console.log("currentNode is not null, CallsView.addAzureAD starts");
-                this.addAzureAD(this.currentNode);
+                this.addAzureAD(this.currentCall);
                 this.treeNodes = CallService.getCalls();
             }
         },
@@ -123,11 +125,8 @@ export default {
             this.treeNodes = CallService.getCalls();
         },
         onNodeSelect(node) {
-            this.currentNode = node;
-
-            this.currentSelectedNodeIndex = this.treeNodes.indexOf(node);
-            console.log("current selected node is : " + this.currentSelectedNodeIndex);
-            console.log("treeNode length: " + this.treeNodes.length);
+            this.currentNode = node;  // Leaf node
+            this.currentCall = this.treeNodes.find(t => t.callName == node.callName);  // Data of current call
         },
         updateTree() {
             this.treeNodes = CallService.getCalls();
@@ -156,38 +155,21 @@ export default {
             this.treeNodes = CallService.getCalls();
         },
         deleteButtonClick(call) {
-            const nodeData = call.data;
-            if ("inputParameters" in nodeData) {
-                // delete the input parameter for the clicked call
-                const inputParameter = nodeData.inputParameters;
-                CallService.deleteInputParameter(nodeData, inputParameter);
-                this.inputParams = this.inputParams.filter(
-                    (p) => p !== inputParameter // remove input parameter from inputParams array
-                );
-            } else {
-                // delete the clicked call
-                CallService.deleteCall(nodeData);
-            }
+            const nodeData = call;
+            // delete the clicked call
+            CallService.deleteCall(nodeData);
             this.treeNodes = CallService.getCalls();
             this.currentNode = {}; // clear the edit area
         },
         addInputParameter(call) {
             CallService.addInputParameter(call.data);
+
         },
         addAzureAD(call) {
             console.log("---CallsView.addAzureAD starts---");
             console.log("currentSelectedNodeIndex is: " + this.currentSelectedNodeIndex);
             CallService.addAzureAD(call.data);
         },
-        addInputParams() {
-        },
-
-
-        //   removeInputParameter(parameter) {
-        //        const index = this.currentNode.inputParameters.indexOf(parameter);
-        //        if (index > -1) {
-        //       this.currentNode.inputParameters.splice(index, 1);
-        //            }            
     },
 
 };

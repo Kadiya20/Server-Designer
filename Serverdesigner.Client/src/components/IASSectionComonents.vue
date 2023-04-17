@@ -1,23 +1,29 @@
 <template>
-    <div class="InputParameterComponent">
+  <div class="IASSectionComponent">
+    <div v-for="(inputParam, index) in inputParams" :key="index" class="InputParameterComponent">
       <div class="label">Parameter:</div>
-      <div class="control"><input v-model="inputParam.parameter" v-on:change="$emit('change')" /></div>
+      <div class="control"><input v-model="inputParam.parameter" v-on:change="updateInputParams" /></div>
       <div class="label">Value:</div>
-      <div class="control"><input v-model="inputParam.value" v-on:change="$emit('change')" /></div>
+      <div class="control"><input v-model="inputParam.value" v-on:change="updateInputParams" /></div>
     </div>
-  </template>
+  </div>
+</template>
   
-  <script>
+<script>
 export default {
   props: {
-    inputParam: Object,
+    inputParams: Array,
+  },
+  mounted() {
+
   },
   methods: {
-  
+    updateInputParams() {
+      this.$emit('updateInputParams', this.inputParams);
+    },
   },
 };
 </script>
-
 
 
   <style scoped>
