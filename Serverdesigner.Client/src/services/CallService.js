@@ -64,7 +64,7 @@ class CallService {
   getCalls() {
     return this.calls.map(c => {
       const children = [
-        { callName: c.name, label: "Name2: " + c.name },
+        { callName: c.name, label: "Name: " + c.name },
         { callName: c.name, label: "Operation:" + c.operation },
         { callName: c.name, label: "Template path:" + c.templatePath },
       ];
