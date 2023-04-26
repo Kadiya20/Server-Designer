@@ -4,7 +4,7 @@ import CallViewButtons from '../components/CallViewButtons.vue';
 import 'primeicons/primeicons.css';
 import EditCallComponent from '../components/EditCallComponent.vue';
 import CallService from "../services/CallService.js";
-import IASSectionComponents from '../components/IASSectionComonents.vue';
+import ParamValueComponent from '../components/ParamValueComponent.vue';
 
 
 
@@ -23,9 +23,9 @@ import IASSectionComponents from '../components/IASSectionComonents.vue';
                 <EditCallComponent v-if="!currentNode.component" v-bind:call="currentCall.data"
                     v-on:change="updateTree">
                 </EditCallComponent>
-                <IASSectionComponents v-if="currentNode.component == 'inputParameter'"
+                <ParamValueComponent v-if="currentNode.component == 'inputParameter'"
                     v-bind:inputParams="currentCall.data.inputParameters">
-                </IASSectionComponents>
+            </ParamValueComponent>
             </div>
         </div>
     </div>

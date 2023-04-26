@@ -1,23 +1,23 @@
 <template>
-  <div class="IASSectionComponent">
+  <div class="ParamValueComponent">
     <div v-for="(inputParam, index) in inputParams" :key="index" class="InputParameterComponent">
       <div class="row">
         <div class="column">
           <div class="label">Parameter:</div>
           <div class="control">
-            <div v-for="(param, paramIndex) in inputParam.parameter" :key="paramIndex">
-              <input v-model="inputParam.parameter[paramIndex]" v-on:change="addParameter(inputParam, paramIndex)" />
+            <div v-for="(param, paramIndex) in inputParam.parameters" :key="paramIndex">
+              <input v-model="inputParam.parameters[paramIndex]" v-on:keyup.enter="focusNextInput($event.target)" />
             </div>
-            <div><input v-on:keyup.enter="addParameter(inputParam, inputParam.parameter.length)" placeholder="Add parameter"></div>
+            <div><input v-on:keyup.enter="addParameter(inputParam)" placeholder="Add parameter"></div>
           </div>
         </div>
         <div class="column">
           <div class="label">Value:</div>
           <div class="control">
-            <div v-for="(value, valueIndex) in inputParam.value" :key="valueIndex">
-              <input v-model="inputParam.value[valueIndex]" v-on:change="addValue(inputParam, valueIndex)" />
+            <div v-for="(value, valueIndex) in inputParam.values" :key="valueIndex">
+              <input v-model="inputParam.values[valueIndex]" v-on:keyup.enter="focusNextInput($event.target)" />
             </div>
-            <div><input v-on:keyup.enter="addValue(inputParam, inputParam.value.length)" placeholder="Add value"></div>
+            <div><input v-on:keyup.enter="addParameter(inputParam)" placeholder="Add value"></div>
           </div>
         </div>
       </div>
@@ -37,29 +37,30 @@ export default {
     updateInputParams() {
       this.$emit('updateInputParams', this.inputParams);
     },
-    addParameter(inputParam, index) {
-      if (!inputParam.parameter) {
-        inputParam.parameter = [];
+    addParameter(inputParam) {
+      if (!inputParam.parameters) {
+        inputParam.parameters = [];
       }
-      inputParam.parameter.splice(index + 1, 0, '');
-      if (!inputParam.value) {
-        inputParam.value = [];
+      if (!inputParam.values) {
+        inputParam.values = [];
       }
-      inputParam.value.splice(index + 1, 0, '');
+      inputParam.parameters.push('');
+      inputParam.values.push('');
     },
-    addValue(inputParam, index) {
-      if (!inputParam.value) {
-        inputParam.value = [];
+    focusNextInput(target) {
+      if (target.nextElementSibling) {
+        target.nextElementSibling.focus();
+      } else {
+        // If there is no next input, add a new key-value pair
+        const inputParam = this.inputParams[this.inputParams.length - 1];
+        this.addParameter(inputParam);
       }
-      inputParam.value.splice(index + 1, 0, '');
-      if (!inputParam.parameter) {
-        inputParam.parameter = [];
-      }
-      inputParam.parameter.splice(index + 1, 0, '');
     },
   },
 };
 </script>
+
+
 
 <style scoped>
   .InputParameterComponent{
