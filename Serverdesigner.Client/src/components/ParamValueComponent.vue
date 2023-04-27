@@ -1,27 +1,36 @@
 <template>
   <div class="ParamValueComponent">
-    <div v-for="(inputParam, index) in inputParams" :key="index" class="InputParameterComponent">
+    <div class="InputParameterComponent">
       <div class="row">
         <div class="column">
-          <div class="label">Parameter:</div>
+          <div class="label">Parameter</div>
           <div class="control">
-            <div v-for="(param, paramIndex) in inputParam.parameters" :key="paramIndex">
-              <input v-model="inputParam.parameters[paramIndex]" v-on:keyup.enter="focusNextInput($event.target)" />
-            </div>
-            <div><input v-on:keyup.enter="addParameter(inputParam)" placeholder="Add parameter"></div>
+            <input v-model="newParam" class="input" placeholder="Enter parameter">
           </div>
         </div>
         <div class="column">
-          <div class="label">Value:</div>
+          <div class="label">Value</div>
           <div class="control">
-            <div v-for="(value, valueIndex) in inputParam.values" :key="valueIndex">
-              <input v-model="inputParam.values[valueIndex]" v-on:keyup.enter="focusNextInput($event.target)" />
-            </div>
-            <div><input v-on:keyup.enter="addParameter(inputParam)" placeholder="Add value"></div>
+            <input v-model="newValue" class="input" placeholder="Enter value">
           </div>
+        </div>
+        <div class="column">
+          <button @click="addNewParam" class="button">Add</button>
         </div>
       </div>
     </div>
+    <div v-for="(inputParam, index) in inputParams" :key="index" class="InputParameterComponent">
+      <div class="row">
+        <div class="column">
+          <div class="input">{{ inputParam.parameter }}</div>
+        </div>
+        <div class="column line"></div>
+        <div class="column">
+          <div class="input">{{ inputParam.value }}</div>
+        </div>
+      </div>
+    </div>
+    <div v-if="errorMsg" class="error">{{ errorMsg }}</div>
   </div>
 </template>
 
@@ -30,48 +39,55 @@ export default {
   props: {
     inputParams: Array,
   },
-  mounted() {
-
+  data() {
+    return {
+      newParam: "",
+      newValue: "",
+      errorMsg: "",
+    };
   },
   methods: {
-    updateInputParams() {
-      this.$emit('updateInputParams', this.inputParams);
-    },
-    addParameter(inputParam) {
-      if (!inputParam.parameters) {
-        inputParam.parameters = [];
+    addNewParam() {
+      const paramInput = this.newParam.trim();
+      const valueInput = this.newValue.trim();
+
+      if (!paramInput || !valueInput) {
+        return;
       }
-      if (!inputParam.values) {
-        inputParam.values = [];
+
+      const existingParam = this.inputParams.find(
+        (inputParam) => inputParam.parameter === paramInput
+      );
+
+      if (existingParam) {
+        this.errorMsg = "Parameter name already exists!";
+        return;
       }
-      inputParam.parameters.push('');
-      inputParam.values.push('');
-    },
-    focusNextInput(target) {
-      if (target.nextElementSibling) {
-        target.nextElementSibling.focus();
-      } else {
-        // If there is no next input, add a new key-value pair
-        const inputParam = this.inputParams[this.inputParams.length - 1];
-        this.addParameter(inputParam);
-      }
+
+      this.inputParams.push({ parameter: paramInput, value: valueInput });
+      this.newParam = "";
+      this.newValue = "";
+      this.errorMsg = "";
     },
   },
 };
 </script>
 
-
-
 <style scoped>
-  .InputParameterComponent{
+  .ParamValueComponent {
     display: flex;
-    width: 100%;
+    flex-direction: column;
+    margin: 10px;
+  }
+
+  .InputParameterComponent {
+    border: 1px solid black;
+    margin-bottom: 10px;
   }
 
   .row {
     display: flex;
     align-items: center;
-    padding: 20px;
     height: 50px;
   }
 
@@ -79,26 +95,56 @@ export default {
     display: flex;
     flex-direction: column;
     width: 50%;
+    position: relative;
+  }
+
+  .column.line::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border-left: 1px solid black;
   }
 
   .label {
     font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 5px;
   }
 
   .control {
-    padding-top: 10px;
-    padding-left: 11px;
-    height: inherit;
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+    height: 100%;
   }
 
   input {
     width: 100%;
-    height: 70%;
-    padding-left: 15px;
+    height: 100%;
+    padding-left: 10px;
+    border: none;
+    outline: none;
   }
 
   button {
-    height: 70%;
+    height: 100%;
     margin-left: 10px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 5px 10px;
+  }
+
+  .error {
+    color: red;
+    margin-top: 10px;
   }
 </style>
+
