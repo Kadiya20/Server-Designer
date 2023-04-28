@@ -4,7 +4,7 @@ import CallViewButtons from '../components/CallViewButtons.vue';
 import 'primeicons/primeicons.css';
 import EditCallComponent from '../components/EditCallComponent.vue';
 import CallService from "../services/CallService.js";
-import InputParameterComponent from '../components/InputParamterComponent.vue';
+import ParamValueComponent from '../components/ParamValueComponent.vue';
 
 
 
@@ -16,24 +16,19 @@ import InputParameterComponent from '../components/InputParamterComponent.vue';
         </div>
         <div class="callsContent">
             <div class="tree">
-                <Tree selectionMode="single" v-bind:value="treeNodes" v-on:node-select="onNodeSelect">  
+                <Tree selectionMode="single" v-bind:value="treeNodes" v-on:node-select="onNodeSelect">
                 </Tree>
             </div>
-             <div class="editarea" v-if="'data' in currentNode">
-                <!-- <div v-if="!showInputParameters"> -->
-          <EditCallComponent v-bind:call="currentNode" v-on:change="updateTree"></EditCallComponent>
-             <div v-if="currentNode.showInputParameters">
-              <InputParameterComponent v-for="(inputParam, index) in currentNode.inputParameters" 
-                            v-bind:key="index" v-bind:inputParam="inputParam"></InputParameterComponent>
-             </div>
-           <!-- </div>
-        <div v-else>
-          <InputParameterComponent v-for="(inputParam, index) in inputParams" v-bind:key="index" v-bind:inputParam="inputParam"></InputParameterComponent>
-        </div> -->
+            <div class="editarea" v-if="currentNode.label">
+                <EditCallComponent v-if="!currentNode.component" v-bind:call="currentCall.data"
+                    v-on:change="updateTree">
+                </EditCallComponent>
+                <ParamValueComponent v-if="currentNode.component == 'inputParameter'"
+                    v-bind:inputParams="currentCall.data.inputParameters">
+            </ParamValueComponent>
             </div>
         </div>
     </div>
-
 </template>
 
 <style scoped>
@@ -75,12 +70,14 @@ import InputParameterComponent from '../components/InputParamterComponent.vue';
 
 <script>
 export default {
-    components: { CallViewButtons , Tree},
+    components: { CallViewButtons, Tree },
     data() {
         return {
             treeNodes: [],
             currentNode: {},
+            currentCall: {},
             currentSelectedNodeIndex: null,
+            editComponent: "",
         };
     },
     mounted() {
@@ -94,36 +91,33 @@ export default {
                 this.addCall();
             }
             if (button == "up") {
-                if (this.treeNodes.length > 1 && this.currentSelectedNodeIndex != 0){
-                    this.btnUpClick(this.currentNode);
+                if (this.treeNodes.length > 1 && this.currentSelectedNodeIndex != 0) {
+                    this.btnUpClick(this.currentCall);
                 }
             }
             if (button == "down") {
-                if (this.treeNodes.length > 1 && this.currentSelectedNodeIndex < (this.treeNodes.length-1)){
-                    this.btnDownClick(this.currentNode);
+                if (this.treeNodes.length > 1 && this.currentSelectedNodeIndex < (this.treeNodes.length - 1)) {
+                    this.btnDownClick(this.currentCall);
                 }
             }
-            if(button == "delete"){  
-               this.deleteCall(this.currentNode);
+            if (button == "delete") {
+                this.deleteButtonClick(this.currentCall);
             }
-            if (button === 'clone') {
+            if (button == 'clone') {
                 //   const clonedCall = CallService.cloneCall(this.currentNode.data);
-                  CallService.cloneCall(this.currentNode.data);
-                 this.treeNodes = CallService.getCalls();
-                 }
+                CallService.cloneCall(this.currentCall.data);
+                this.treeNodes = CallService.getCalls();
+            }
             if (button == 'inputParams') {
                 console.log("Inputparams is clickable!!");
-                this.addInputParameter(this.currentNode);
+                this.addInputParameter(this.currentCall);
                 this.treeNodes = CallService.getCalls();
-             }
+            }
             if (button == 'azLogin') {
                 console.log("azLogin Btn clicked");
-                if (this.currentSelectedNodeIndex != null)
-                {
-                    console.log("currentNode is not null, CallsView.addAzureAD starts");
-                    this.addAzureAD(this.currentNode.data);
-                    this.treeNodes = CallService.getCalls();
-                }   
+                console.log("currentNode is not null, CallsView.addAzureAD starts");
+                this.addAzureAD(this.currentCall);
+                this.treeNodes = CallService.getCalls();
             }
         },
         addCall() {
@@ -131,23 +125,20 @@ export default {
             this.treeNodes = CallService.getCalls();
         },
         onNodeSelect(node) {
-            this.currentNode = node;
-    
-            this.currentSelectedNodeIndex = this.treeNodes.indexOf(node);
-            console.log("current selected node is : " + this.currentSelectedNodeIndex);
-            console.log("treeNode length: " + this.treeNodes.length);
+            this.currentNode = node;  // Leaf node
+            this.currentCall = this.treeNodes.find(t => t.callName == node.callName);  // Data of current call
         },
         updateTree() {
             this.treeNodes = CallService.getCalls();
         },
         btnUpClick() {
 
-            let oldIndex = this.currentSelectedNodeIndex; 
+            let oldIndex = this.currentSelectedNodeIndex;
             console.log("oldIndex : " + oldIndex);
-            let beforeIndexNode = CallService.calls.at(oldIndex - 1); 
+            let beforeIndexNode = CallService.calls.at(oldIndex - 1);
             console.log("beforeIndexNode: " + beforeIndexNode);
 
-            CallService.calls[oldIndex - 1] = CallService.calls.at(oldIndex); 
+            CallService.calls[oldIndex - 1] = CallService.calls.at(oldIndex);
             CallService.calls[oldIndex] = beforeIndexNode;
             console.info(CallService.calls);
             this.treeNodes = CallService.getCalls();
@@ -163,31 +154,23 @@ export default {
             console.info(CallService.calls);
             this.treeNodes = CallService.getCalls();
         },
-        deleteCall(call){
-            CallService.deleteCall(call.data);
-            if (call === this.currentNode) {
-             this.currentNode = {}; // clear the edit area
-           }
+        deleteButtonClick(call) {
+            const nodeData = call;
+            // delete the clicked call
+            CallService.deleteCall(nodeData);
             this.treeNodes = CallService.getCalls();
-            console.info(CallService.calls);
+            this.currentNode = {}; // clear the edit area
         },
         addInputParameter(call) {
-          CallService.addInputParameter(call.data);
+            CallService.addInputParameter(call.data);
+
         },
         addAzureAD(call) {
             console.log("---CallsView.addAzureAD starts---");
-                console.log("currentSelectedNodeIndex is: " + this.currentSelectedNodeIndex);
-                CallService.addAzureAD(call.data, this.currentSelectedNodeIndex);
-        }
-
-
-    //   removeInputParameter(parameter) {
-    //        const index = this.currentNode.inputParameters.indexOf(parameter);
-    //        if (index > -1) {
-    //       this.currentNode.inputParameters.splice(index, 1);
-    //            }            
-    //     },
-
+            console.log("currentSelectedNodeIndex is: " + this.currentSelectedNodeIndex);
+            CallService.addAzureAD(call.data);
+        },
     },
+
 };
 </script>
