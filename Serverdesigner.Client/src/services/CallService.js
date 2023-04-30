@@ -8,7 +8,7 @@ class CallService {
     const name = "NewCall " + (++this.counter);
     const operation = "";
     const templatePath = "";
-    
+
     this.calls.push({
       name: name,
       operation: operation,
@@ -30,47 +30,60 @@ class CallService {
     this.calls.push(clonedCall);
   }
 
-  addInputParameter(call, inputparameter) {
+  addInputParameter(call) {
     const found = this.calls.find(c => c.name === call.name);
     if (!found) { return false; }
     if (found.inputParameters) {
-      // input parameters already exist for the call
       return false;
     } else {
       found.inputParameters = [];
-      found.inputParameters.push({ inputparameter }); 
+      found.inputParameters.push({parameter: "", value: ""});
       return true;
     }
+  }
+
+  addAzureAD(call) {
+    console.log("---- CallService.addAzureAD starts----");
+    console.info(this.calls);
+    const found = this.calls.find(c => c.name === call.name);
+    if (!found) { return false; }
+    if (found.azLogin) { return false; }
+    found.azLogin = { "Mode": "", "Login Behaviour": "Auto", "AzureID App ID": "" };
+    return true;
+
+  }
+
+  deleteInputParameter(call, inputParameter) {
+    const found = this.calls.find(c => c.name === call.name);
+    if (!found || !found.inputParameters) { return false; }
+
+    found.inputParameters = found.inputParameters.filter(ip => ip !== inputParameter);
+    return true;
   }
 
   getCalls() {
     return this.calls.map(c => {
       const children = [
-        { label: "Name: " + c.name },
-        { label: "Operation:" + c.operation },
-        { label: "Template path:" + c.templatePath },
+        { callName: c.name, label: "Name: " + c.name },
+        { callName: c.name, label: "Operation:" + c.operation },
+        { callName: c.name, label: "Template path:" + c.templatePath },
       ];
-        if (c.inputParameters) {
-        children.push({ label: "Input Parameters" });
+      if (c.inputParameters !== undefined) {
+        children.push({ callName: c.name, label: "Input Parameters", component: "inputParameter" ,data: {
+          inputParameters: c.inputParameters
+        }});
       }
-        if (c.azLogin){
-          children.push({ label: c.azLogin })
-        }
-        return { label: c.name, data: c, children };
-      });
-    }
-
-  addAzureAD(call, azLogin) {
-    console.log("---- CallService.addAzureAD starts----");
-    console.info(this.calls);
-  
-      const found = this.calls.find(c=> c.name === call.name);
-      if (!found) { return false; }
-      if (!found.azLogin) {found.azLogin = "AzureAD Login"}
-
-      found.push(azLogin);
-  
+      if (c.azLogin !== undefined) {
+        children.push({ callName: c.name, label: "Azure AD Login" })
+      }
+      return { callName: c.name, label: c.name, data: c, children };
+    });
   }
+
+  getCallData(callName) {
+    return this.calls.find(c => c.name === callName);
+  }
+
 }
 
 export default new CallService();

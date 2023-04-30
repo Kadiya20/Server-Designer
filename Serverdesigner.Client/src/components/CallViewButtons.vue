@@ -12,10 +12,10 @@
         <div class="vl"></div>
 
         <div id="second-btn-section" class="btn-section">
-            <button v-on:click="$emit('buttonClick', 'inputParams')">
+            <button v-on:click="$emit('buttonClick', 'inputParams')" >
                 <img src="@/assets/images/inputParamIcon.png" class="btn-col" />Input Parameters
             </button>
-            <button v-on:click="$emit('buttonClick', 'azLogin')">
+            <button v-on:click="$emit('buttonClick', 'azLogin')" >
                 <img src="@/assets/images/azure.png" alt="AzureAD Login" class="btn-col" />AzureAD Login
             </button>
             <button>

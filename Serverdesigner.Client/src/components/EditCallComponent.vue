@@ -3,15 +3,15 @@
         {{  }}
         <div class="row">
             <div class="label">Name:</div>
-            <div class="control"><input v-model="call.data.name" v-on:change="$emit('change')" /></div>
+            <div class="control"><input v-model="call.name" v-on:change="$emit('change')" /></div>
         </div>
         <div class="row">
             <div class="label">Operation:</div>
-            <div class="control"><Dropdown  :options="operationOptions" v-model="call.data.operation" placeholder="  " v-on:change="$emit('change')" /></div>
+            <div class="control"><Dropdown  :options="operationOptions" v-model="call.operation" placeholder="  " v-on:change="$emit('change')" /></div>
         </div>
         <div class="row">
             <div class="label">Template path:</div>
-            <div class="control"><FileUpload mode="basic" v-model="call.data.templatePath" accept=".doc,.docx,.pdf" v-on:change="$emit('change')" /></div>
+            <div class="control"><FileUpload mode="basic" v-model="call.templatePath" accept=".doc,.docx,.pdf" v-on:change="$emit('change')" /></div>
         </div>
     </div>
 </template>
